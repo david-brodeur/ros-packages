@@ -1,2 +1,2 @@
 # ros-packages
-Robotics applications using the Robot Operating System (ROS)
+Robotic applications using the Robot Operating System (ROS)
