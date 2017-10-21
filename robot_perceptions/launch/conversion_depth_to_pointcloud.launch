@@ -1,0 +1,16 @@
+<launch>
+
+    <arg name="nodelet_manager_name" default="nodelet_manager"/>
+    <arg name="depth_image_topic_name" default="/camera/depth/image_raw"/>
+    <arg name="depth_info_topic_name" default="/camera/depth/camera_info"/>
+    <arg name="points_topic_name" default="/camera/depth/points"/>
+
+    <node name="conversion_depth_to_pointcloud_xyz" pkg="nodelet" type="nodelet" args="load depth_image_proc/point_cloud_xyz $(arg nodelet_manager_name) --no-bond">
+
+        <remap from="image_rect" to="$(arg depth_image_topic_name)"/>
+        <remap from="camera_info" to="$(arg depth_info_topic_name)"/>
+        <remap from="points" to="$(arg points_topic_name)"/>
+
+    </node>
+
+</launch>

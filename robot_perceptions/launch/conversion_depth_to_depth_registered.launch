@@ -1,0 +1,20 @@
+<launch>
+
+    <arg name="nodelet_manager_name" default="nodelet_manager"/>
+    <arg name="rgb_info_topic_name" default="/camera/rgb/camera_info"/>
+    <arg name="depth_image_topic_name" default="/camera/depth/image_raw"/>
+    <arg name="depth_info_topic_name" default="/camera/depth/camera_info"/>
+    <arg name="depth_registered_image_topic_name" default="/camera/depth_registered/image_raw"/>
+    <arg name="depth_registered_info_topic_name" default="/camera/depth_registered/camera_info"/>
+
+    <node name="conversion_depth_to_depth_registered" pkg="nodelet" type="nodelet" args="load depth_image_proc/register $(arg nodelet_manager_name) --no-bond">
+
+        <remap from="depth/image_rect" to="$(arg depth_image_topic_name)"/>
+        <remap from="depth/camera_info" to="$(arg depth_info_topic_name)"/>
+        <remap from="rgb/camera_info" to="$(arg rgb_info_topic_name)"/>
+        <remap from="depth_registered/image_rect" to="$(arg depth_registered_image_topic_name)"/>
+        <remap from="depth_registered/camera_info" to="$(arg depth_registered_info_topic_name)"/>
+
+    </node>
+
+</launch>

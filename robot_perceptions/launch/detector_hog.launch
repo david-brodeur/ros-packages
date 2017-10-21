@@ -1,0 +1,32 @@
+<launch>
+
+    <!--
+
+        Detect a pattern using histogram of gradient.
+        Default is a people detector.
+
+    -->
+
+    <arg name="hit_threshold" default="0.3"/>
+    <arg name="win_stride" default="8"/>
+    <arg name="padding" default="0"/>
+    <arg name="scale_zero" default="1.05"/>
+    <arg name="group_threshold" default="4"/>
+
+    <arg name="image_topic_name" default="/sensor_camera/image_raw"/>
+    <arg name="roi_topic_name" default="/detector/hog/roi"/>
+
+    <node name="detector_hog" pkg="robot_perceptions" type="detector_hog" output="screen">
+
+        <param name="hit_threshold" value="$(arg hit_threshold)"/>
+        <param name="win_stride" value="$(arg win_stride)"/>
+        <param name="padding" value="$(arg padding)"/>
+        <param name="scale_zero" value="$(arg scale_zero)"/>
+        <param name="group_threshold" value="$(arg group_threshold)"/>
+
+        <param name="image_topic_name" value="$(arg image_topic_name)"/>
+        <param name="roi_topic_name" value="$(arg roi_topic_name)"/>
+
+    </node>
+
+</launch>

@@ -1,0 +1,15 @@
+<launch>
+
+    <arg name="image_topic_name" default="/sensor_camera/image_raw"/>
+    <arg name="roi_topic_name" default="/detector/haar/roi"/>
+    <arg name="tool_output_topic_name" default="/tool/draw_bounding_box/image"/>
+
+    <node name="tool_draw_bounding_box" pkg="robot_perceptions" type="tool_draw_bounding_box">
+
+        <param name="image_topic_name" value="$(arg image_topic_name)"/>
+        <param name="roi_topic_name" value="$(arg roi_topic_name)"/>
+        <param name="tool_output_topic_name" value="$(arg tool_output_topic_name)"/>
+
+    </node>
+
+</launch>

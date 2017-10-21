@@ -1,0 +1,34 @@
+<launch>
+
+    <!--
+
+        Detect a pattern using Haar cascade classifier.
+        Default is a frontal face detector.
+
+    -->
+
+    <arg name="model_name" default="haarcascade_frontalface_alt.xml"/>
+    <arg name="scale_factor" default="1.5"/>
+    <arg name="min_neighbors" default="2"/>
+    <arg name="flags" default="0"/>
+    <arg name="min" default="30"/>
+    <arg name="max" default="200"/>
+
+    <arg name="image_topic_name" default="/sensor_camera/image_raw"/>
+    <arg name="roi_topic_name" default="/detector/haar/roi"/>
+
+    <node name="detector_haar" pkg="robot_perceptions" type="detector_haar" output="screen">
+
+        <param name="model_name" value="$(find robot_perceptions)/config/haar/$(arg model_name)"/>
+        <param name="scale_factor" value="$(arg scale_factor)"/>
+        <param name="min_neighbors" value="$(arg min_neighbors)"/>
+        <param name="flags" value="$(arg flags)"/>
+        <param name="min" value="$(arg min)"/>
+        <param name="max" value="$(arg max)"/>
+
+        <param name="image_topic_name" value="$(arg image_topic_name)"/>
+        <param name="roi_topic_name" value="$(arg roi_topic_name)"/>
+
+    </node>
+
+</launch>

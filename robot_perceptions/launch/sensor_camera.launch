@@ -1,0 +1,38 @@
+<launch>
+
+    <!--
+
+        Launch a sensor_camera node.
+
+        driver_id determines the camera driver to be used : 
+
+            WEB = 0
+
+            TODO add other options here as they are available.
+
+    -->
+
+    <arg name="driver_id" default="0"/>
+    <arg name="device_id" default="1"/>
+    <arg name="fps" default="25"/>
+    <arg name="frame_width" default="640"/>
+    <arg name="frame_height" default="480"/>
+
+    <arg name="image_topic_name" default="/sensor_camera/image_raw"/>
+    <arg name="info_topic_name" default="/sensor_camera/camera_info"/>
+    <arg name="pub_rate" default="25.0"/>
+
+    <node name="sensor_camera" pkg="robot_perceptions" type="sensor_camera" output="screen">
+
+        <param name="driver_id" value="$(arg driver_id)"/>
+        <param name="device_id" value="$(arg device_id)"/>
+        <param name="fps" value="$(arg fps)"/>
+        <param name="frame_width" value="$(arg frame_width)"/>
+        <param name="frame_height" value="$(arg frame_height)"/>
+
+        <param name="image_topic_name" value="$(arg image_topic_name)"/>
+        <param name="pub_rate" value="$(arg pub_rate)"/>
+
+    </node>
+
+</launch>

@@ -1,0 +1,17 @@
+<launch>
+
+    <arg name="depth_image_topic_name" default="/camera/depth/image_raw"/>
+    <arg name="depth_frame_id" default="camera_depth_frame"/>
+    <arg name="scan_topic_name" default="/camera/scan"/>
+
+    <node name="depthimage_to_laserscan" pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" args="image:=$(arg depth_image_topic_name) scan:=$(arg scan_topic_name)" output="screen">
+
+        <param name="scan_height" value="1"/>
+        <param name="scan_time" value="0.033"/>
+        <param name="range_min" value="0.45"/>
+        <param name="range_max" value="10.0"/>
+        <param name="output_frame_id" value="$(arg depth_frame_id)"/>
+
+    </node>
+
+</launch>

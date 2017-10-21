@@ -1,0 +1,18 @@
+<launch>
+
+    <arg name="nodelet_manager_name" default="nodelet_manager"/>
+    <arg name="rgb_image_topic_name" default="/camera/rgb/image_raw"/>
+    <arg name="rgb_info_topic_name" default="/camera/rgb/camera_info"/>
+    <arg name="depth_registered_image_topic_name" default="/camera/depth_registered/image_raw"/>
+    <arg name="points_topic_name" default="/camera/depth_registered/points"/>
+
+    <node name="conversion_depth_registered_to_pointcloud_xyzrgb" pkg="nodelet" type="nodelet" args="load depth_image_proc/point_cloud_xyzrgb $(arg nodelet_manager_name) --no-bond">
+
+        <remap from="depth_registered/image_rect" to="$(arg depth_registered_image_topic_name)"/>
+        <remap from="rgb/image_rect_color" to="$(arg rgb_image_topic_name)"/>
+        <remap from="rgb/camera_info" to="$(arg rgb_info_topic_name)"/>
+        <remap from="depth_registered/points" to="$(arg points_topic_name)"/>
+
+    </node>
+
+</launch>
