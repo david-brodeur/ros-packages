@@ -51,7 +51,6 @@ namespace robot_common
 
             BehaviorFactory<T>* factory_; ///< BehaviorFactory module.
 
-
         private:
 
             ros::NodeHandle nh_;                      ///< ROS node handle reference.
