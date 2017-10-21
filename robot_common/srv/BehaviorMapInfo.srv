@@ -1,0 +1,5 @@
+---
+string[] name     # name of each Behavior in the BehaviorMap
+int32[] priority  # priority of each Behavior in the BehaviorMap
+bool[] activation # activation of each Behavior in the BehaviorMap
+
