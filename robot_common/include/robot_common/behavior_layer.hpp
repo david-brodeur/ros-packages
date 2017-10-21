@@ -100,7 +100,7 @@ namespace robot_common
     }
 
     template <class T>
-    int BehaviorLayer<T>::init()
+    void BehaviorLayer<T>::init()
     {
         reset();
 
