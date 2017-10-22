@@ -1,0 +1,28 @@
+<launch>
+
+    <!--
+
+        Behavior Layer for mobile robot applications.
+
+    -->
+
+    <arg name="command_topic_name" default="/cmd"/>
+    <arg name="arbitration_name" default="/arbitration"/>
+    <arg name="arbitration_rate" default="10.0"/>
+    <arg name="behavior_stop_priority" default="1"/>
+    <arg name="perception_range_topic_name" default="/scan"/>
+
+    <node name="behavior_layer_mobile" pkg="robot_behaviors" type="behavior_layer_mobile" output="screen">
+
+        <param name="command_topic_name" value="$(arg command_topic_name)"/>
+        <param name="arbitration_name" value="$(arg arbitration_name)"/>
+        <param name="arbitration_rate" value="$(arg arbitration_rate)"/>
+
+        <rosparam param="behavior_names">[avoid, move, stop]</rosparam>
+        <rosparam param="behavior_priorities">[2, 1, 3]</rosparam>
+
+        <param name="perception_range_topic_name" value="$(arg perception_range_topic_name)"/>
+
+    </node>
+
+</launch>
