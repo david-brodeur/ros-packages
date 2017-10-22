@@ -100,7 +100,7 @@ namespace robot_common
     }
 
     template <class T>
-    void BehaviorLayer<T>::init()
+    int BehaviorLayer<T>::init()
     {
         reset();
 
@@ -130,7 +130,7 @@ namespace robot_common
     }
 
     template <class T>
-    int BehaviorLayer<T>::reset()
+    void BehaviorLayer<T>::reset()
     {
         if (arbitration_ != NULL)
         {
