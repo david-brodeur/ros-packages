@@ -5,4 +5,4 @@ Ubuntu 16.04
 
 ROS Kinetic Kame
 
-This project is still under active development.
+N.B. This project is still under active development.
