@@ -1,0 +1,7 @@
+<launch>
+
+    <!-- GUI tools for robotic speech interactions. -->
+
+    <node name="gui_speech" pkg="robot_gui" type="gui_speech" output="screen"/>
+
+</launch>
