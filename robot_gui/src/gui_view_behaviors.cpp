@@ -17,22 +17,6 @@ GuiViewBehaviors::GuiViewBehaviors() : GuiCentralWidget()
     view_->setScene(scene_);
 
     layout()->addWidget(view_);
-/*
-    name_.push_back("stop");
-    name_.push_back("move");
-    name_.push_back("avoid");
-    name_.push_back("load");
-
-    priority_.push_back(3);
-    priority_.push_back(1);
-    priority_.push_back(2);
-    priority_.push_back(4);
-
-    activation_.push_back(true);
-    activation_.push_back(false);
-    activation_.push_back(false);
-    activation_.push_back(true);
-*/
 }
 
 GuiViewBehaviors::~GuiViewBehaviors()
@@ -58,19 +42,26 @@ void GuiViewBehaviors::setActivations(std::vector<uint8_t>& activation)
     activation_ = activation;
 }
 
+// TODO replace hard-coded values
 void GuiViewBehaviors::update()
 {
     QColor color = Qt::white;
 
-    unsigned int x = 0;
-    unsigned int y = 0;
+    float x = 0;
+    float y = 0;
 
     scene_->clear();
 
     GuiDiagramItem* item2 = new GuiDiagramItem(GuiDiagramItem::Arbitration);
 
+    if (name_.size() == 0)
+        item2->setPos(QPointF(250.0, 0.0));
+    else if (name_.size() == 1)
+        item2->setPos(QPointF(250.0, 50.0));
+    else
+        item2->setPos(QPointF(250.0, ((name_.size() - 1) * 75.0)));
+
     item2->setBrush(color);
-    item2->setPos(QPointF(250, 225));
     item2->setPen(QPen(Qt::black, 8));
     scene_->addItem(item2);
 
@@ -79,14 +70,9 @@ void GuiViewBehaviors::update()
         GuiDiagramItem* item = new GuiDiagramItem(GuiDiagramItem::Behavior);
 
         if (!activation_[iBehavior])
-        {
             item->setPen(QPen(Qt::red, 10));
-        }
-
         else
-        {
             item->setPen(QPen(Qt::black, 8));
-        }
 
         item->setBrush(color);
         item->setPos(QPointF(x, y));
@@ -101,18 +87,22 @@ void GuiViewBehaviors::update()
         arrow->updatePosition();
 
         GuiDiagramText* text = new GuiDiagramText();
-        text->setFont(QFont("Courier", 24, QFont::Bold));
-        text->setDefaultTextColor(Qt::black);
+
+        if (!activation_[iBehavior])
+            text->setDefaultTextColor(Qt::red);
+        else
+            text->setDefaultTextColor(Qt::black);
+
+        text->setFont(QFont("Courier", 12, QFont::Bold));
         text->setTextInteractionFlags(Qt::NoTextInteraction);
         text->setZValue(1000.0);
-        //connect(text, SIGNAL(lostFocus(DiagramTextItem*)), this, SLOT(editorLostFocus(DiagramTextItem*)));
-        //connect(text, SIGNAL(selectedChange(QGraphicsItem*)), this, SIGNAL(itemSelected(QGraphicsItem*)));
-        text->setPos(QPointF(x, y));
+        text->setPos(QPointF(x-100.0, y-25));
         text->setPlainText(QString::fromStdString(name_[iBehavior]));
         text->setTextWidth(item->polygon().boundingRect().width());
+
         scene_->addItem(text);
 
-        y += 150;
+        y += 150.0;
     }
 
     view_->fitInView(scene_->sceneRect(), Qt::KeepAspectRatio);

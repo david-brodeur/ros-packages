@@ -48,14 +48,9 @@ GuiSpeech::~GuiSpeech()
 std::string GuiSpeech::name()
 {
     if (main_window_ != NULL)
-    {
         return main_window_->name();
-    }
-
     else
-    {
         return "";
-    }
 }
 
 void GuiSpeech::updateBehaviorMapInfo()
