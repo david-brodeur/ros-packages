@@ -35,7 +35,7 @@ namespace robot_vision
 
             ///\brief Class constructor.
             ///\param parameters Parameter structure pointer to configure the HOG algorithm.
-            AlgorithmVisionHOG(ParametersVisionHOG* parameters, std::string algorithm_name = "/algorithm/vision/HOG");
+            AlgorithmVisionHOG(ParametersVisionHOG& parameters, std::string algorithm_name = "/algorithm/vision/HOG");
 
             ///\brief Class destructor.
             ~AlgorithmVisionHOG();

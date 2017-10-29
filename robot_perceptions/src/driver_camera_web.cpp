@@ -2,7 +2,7 @@
 
 using namespace robot_vision;
 
-DriverCameraWEB::DriverCameraWEB(ParametersCamera* parameters, std::string driver_name) : DriverCamera(parameters, driver_name)
+DriverCameraWEB::DriverCameraWEB(ParametersCamera& parameters, std::string driver_name) : DriverCamera(parameters, driver_name)
 {
 }
 

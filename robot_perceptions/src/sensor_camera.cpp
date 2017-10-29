@@ -21,7 +21,7 @@ SensorCamera::SensorCamera(ros::NodeHandle& nh, ros::NodeHandle& np)
     parameters.p_frame_width = (unsigned int) frame_width_;
     parameters.p_frame_height = (unsigned int) frame_height_;
 
-    driver_camera_ = factory_camera_.create(static_cast<FactoryCamera::DriverCameraID>(driver_id_), &parameters);
+    driver_camera_ = factory_camera_.create(static_cast<FactoryCamera::DriverCameraID>(driver_id_), parameters);
     ret = driver_camera_->open();
 
     if (ret != DriverCamera::SUCCESS)

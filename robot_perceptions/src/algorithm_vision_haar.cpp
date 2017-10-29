@@ -2,14 +2,14 @@
 
 using namespace robot_vision;
 
-AlgorithmVisionHaar::AlgorithmVisionHaar(ParametersVisionHaar* parameters, std::string algorithm_name) : AlgorithmVision(algorithm_name)
+AlgorithmVisionHaar::AlgorithmVisionHaar(ParametersVisionHaar& parameters, std::string algorithm_name) : AlgorithmVision(algorithm_name)
 {
-    model_name_ = parameters->p_model_name;
-    scale_factor_ = parameters->p_scale_factor;
-    min_neighbors_ = parameters->p_min_neighbors;
-    flags_ = parameters->p_flags | CV_HAAR_SCALE_IMAGE;
-    min_ = cv::Size(parameters->p_min, parameters->p_min);
-    max_ = cv::Size(parameters->p_max, parameters->p_max);
+    model_name_ = parameters.p_model_name;
+    scale_factor_ = parameters.p_scale_factor;
+    min_neighbors_ = parameters.p_min_neighbors;
+    flags_ = parameters.p_flags | CV_HAAR_SCALE_IMAGE;
+    min_ = cv::Size(parameters.p_min, parameters.p_min);
+    max_ = cv::Size(parameters.p_max, parameters.p_max);
 }
 
 AlgorithmVisionHaar::~AlgorithmVisionHaar()

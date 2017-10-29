@@ -24,7 +24,7 @@ DetectorHaar::DetectorHaar(ros::NodeHandle& nh, ros::NodeHandle& np)
     parameters.p_min = min_;
     parameters.p_max = max_;
 
-    algorithm_vision_haar_ = new AlgorithmVisionHaar(&parameters);
+    algorithm_vision_haar_ = new AlgorithmVisionHaar(parameters);
     ret = algorithm_vision_haar_->init();
 
     if (ret != AlgorithmVision::SUCCESS)

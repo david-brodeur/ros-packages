@@ -27,7 +27,7 @@ namespace robot_vision
             ///\brief Class constructor.
             ///\param parameters Parameters of the camera driver.
             ///\param driver_name Name of the camera driver.
-            DriverCameraWEB(ParametersCamera* parameters, std::string driver_name = "/driver/camera/web");
+            DriverCameraWEB(ParametersCamera& parameters, std::string driver_name = "/driver/camera/web");
 
             ///\brief Class destructor.
             ~DriverCameraWEB();

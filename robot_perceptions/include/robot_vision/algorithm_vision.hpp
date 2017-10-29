@@ -7,17 +7,9 @@
 
 #include <string>
 
-/**
- * AlgorithmVision
- * 
- * The AlgorithmVision class is a generic class for
- * image processing and computer vision algorithms.
- *
- */
-
 /*! 
  *  \brief     AlgorithmVision
- *  \details   This class is a generic class for image processing and 
+ *  \details   This class is a base class for image processing and 
  *             computer vision algorithms.
  *  \author    David Brodeur <David.Brodeur@USherbrooke.ca>
  *  \version   0.0.1

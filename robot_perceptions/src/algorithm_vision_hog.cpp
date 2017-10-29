@@ -2,13 +2,13 @@
 
 using namespace robot_vision;
 
-AlgorithmVisionHOG::AlgorithmVisionHOG(ParametersVisionHOG* parameters, std::string algorithm_name) : AlgorithmVision(algorithm_name)
+AlgorithmVisionHOG::AlgorithmVisionHOG(ParametersVisionHOG& parameters, std::string algorithm_name) : AlgorithmVision(algorithm_name)
 {
-    hit_threshold_ = parameters->p_hit_threshold;
-    win_stride_ = cv::Size(parameters->p_win_stride, parameters->p_win_stride);
-    padding_ = cv::Size(parameters->p_padding, parameters->p_padding);
-    scale_zero_ = parameters->p_scale_zero;
-    group_threshold_ = parameters->p_group_threshold;
+    hit_threshold_ = parameters.p_hit_threshold;
+    win_stride_ = cv::Size(parameters.p_win_stride, parameters.p_win_stride);
+    padding_ = cv::Size(parameters.p_padding, parameters.p_padding);
+    scale_zero_ = parameters.p_scale_zero;
+    group_threshold_ = parameters.p_group_threshold;
 }
 
 AlgorithmVisionHOG::~AlgorithmVisionHOG()

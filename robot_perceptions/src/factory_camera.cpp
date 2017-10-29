@@ -10,7 +10,7 @@ FactoryCamera::~FactoryCamera()
 {
 }
 
-DriverCamera* FactoryCamera::create(DriverCameraID driver_id, ParametersCamera* parameters)
+DriverCamera* FactoryCamera::create(DriverCameraID driver_id, ParametersCamera& parameters)
 {
 	switch (driver_id)
     {

@@ -34,7 +34,7 @@ namespace robot_vision
             ///\brief Create a camera driver.
             ///\param driver_id Camera driver ID.
             ///\param parameters Parameters of the camera driver.
-            DriverCamera* create(DriverCameraID driver_id, ParametersCamera* parameters);
+            DriverCamera* create(DriverCameraID driver_id, ParametersCamera& parameters);
     };
 }
 

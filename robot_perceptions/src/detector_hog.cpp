@@ -22,7 +22,7 @@ DetectorHOG::DetectorHOG(ros::NodeHandle& nh, ros::NodeHandle& np)
     parameters.p_scale_zero = scale_zero_;
     parameters.p_group_threshold = group_threshold_;
 
-    algorithm_vision_hog_ = new AlgorithmVisionHOG(&parameters);
+    algorithm_vision_hog_ = new AlgorithmVisionHOG(parameters);
     algorithm_vision_hog_->init();
 
     if (ret != AlgorithmVision::SUCCESS)

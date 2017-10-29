@@ -36,7 +36,7 @@ namespace robot_vision
 
             ///\brief Class constructor.
             ///\param parameters Parameter structure pointer to configure the Haar algorithm.
-            AlgorithmVisionHaar(ParametersVisionHaar* parameters, std::string algorithm_name = "/algorithm/vision/Haar");
+            AlgorithmVisionHaar(ParametersVisionHaar& parameters, std::string algorithm_name = "/algorithm/vision/Haar");
 
             ///\brief Class destructor.
             ~AlgorithmVisionHaar();

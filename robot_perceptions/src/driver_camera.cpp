@@ -2,12 +2,12 @@
 
 using namespace robot_vision;
 
-DriverCamera::DriverCamera(ParametersCamera* parameters, std::string driver_name)
+DriverCamera::DriverCamera(ParametersCamera& parameters, std::string driver_name)
 {
-    device_id_ = parameters->p_device_id;
-    fps_ = parameters->p_fps;
-    frame_width_ = parameters->p_frame_width;
-    frame_height_ = parameters->p_frame_height;
+    device_id_ = parameters.p_device_id;
+    fps_ = parameters.p_fps;
+    frame_width_ = parameters.p_frame_width;
+    frame_height_ = parameters.p_frame_height;
 
     driver_name_ = driver_name;
 }
