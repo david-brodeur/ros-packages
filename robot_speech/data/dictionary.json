@@ -1,0 +1,39 @@
+{"dictionary": {
+    "name": "Default dictionary",
+    "description": "Default dictionary",
+    "repeat": "[<J,j><', >ai di<t,s> ]",
+    "items": [
+        {"utterance": "<B,b>onjour", "prompt": {"default": "Bonjour"}},
+        {"utterance": "<B,b>onsoir", "prompt": {"default": "Bonsoir"}},
+        {"utterance": "<B,b>onne journ<é,e>e", "prompt": {"default": "Toi aussi"}},
+        {"utterance": "<B,b>on matin", "prompt": {"default": "Bon matin toi aussi"}},
+        {"utterance": "<B,b>on[ne] apr<è,e>s<-, >midi", "prompt": {"default": "Toi aussi"}},
+        null,
+        {"utterance": "<A,a>ll<ô,o>", "prompt": {"default": "Allo"}},
+        {"utterance": "<C,c>oucou", "prompt": {"default": "Allo"}},
+        {"utterance": "<S,s>alut[ <C,c>omment <S,s,C,c,Ç,ç>a va]", "prompt": {"default": "Salut"}},
+        null,
+        {"utterance": "<B,b>ye[ <B,b>ye]", "prompt": {"default": "Au revoir"}},
+        {"utterance": "<A,a>u[ ]revoir", "prompt": {"default": "Au revoir"}},
+        {"utterance": "<À,A,à,a> tout[e] <à,a> [l[<', >]]heure", "prompt": {"default": "À toute à l'heure"}},
+        {"utterance": "À la prochaine", "prompt": {"default": ""}},
+        {"utterance": "À bientôt", "prompt": {"default": ""}},
+        {"utterance": "À demain", "prompt": {"default": ""}},
+        null,
+        {"utterance": "[<O,o>h [que ]]<<O,o>ui,<O,o>uais,<O,o>uain>", "prompt": {"default": "D'accord"}},
+        {"utterance": "[<O,o>h [que ]]<N,n>on", "prompt": {"default": "D'accord"}},
+        {"utterance": "<N,n>on merci", "prompt": {"default": "D'accord"}},
+        {"utterance": "<J,j>e ne sais pas", "prompt": {"default": "D'accord"}},
+        {"utterance": "<M,m>oi aussi", "prompt": {"default": ""}},
+        {"utterance": "<D,d><', >accord", "prompt": {"default": ""}},
+        null,
+        {
+            "utterance": "Bonjour", 
+            "prompt": {
+                "default": "",
+                "positive": "",
+                "negative": ""
+            }
+        }
+    ]
+}}
