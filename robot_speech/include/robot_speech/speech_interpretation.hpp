@@ -1,6 +1,9 @@
 #ifndef SPEECH_INTERPRETATION
 #define SPEECH_INTERPRETATION
 
+#include <json/json.hpp>
+
+#include <map>
 #include <string>
 
 /*! 
@@ -14,16 +17,12 @@
 
 namespace robot_speech
 {
-    struct UtteranceVariable {
+    struct ParametersSpeechInterpretation
+    {
+        std::string p_dictionary_file_path;
+    };
 
-        char * name;
-        char * value;
-
-        struct UtteranceVariable * next;
-
-    } UtteranceVariable;
-
-    struct ParametersSpeechContext
+    struct SpeechContext
     {
     };
 
@@ -31,43 +30,42 @@ namespace robot_speech
     {
         public:
 
-            enum Error { SUCCESS = 0, 
-                         ERROR,
-                         NO_UTTERANCE,
-                         NO_MATCH };
+            enum class Error : int 
+            { 
+                SUCCESS = 0, 
+                ERROR,
+                NO_UTTERANCE,
+                NO_MATCH
+            };
 
-            SpeechInterpretation();
+            typedef std::map<std::string, std::string> VariableMap; ///< VariableMap type definition.
+
+            SpeechInterpretation(const ParametersSpeechInterpretation& parameters);
 
             ~SpeechInterpretation();
 
-            int init();
+            SpeechInterpretation::Error init();
 
             void reset();
 
-            void setDictionary(const std::string& dictionary_name) { dictionary_name_ = dictionary_name; }
+            SpeechInterpretation::Error process(const std::string& utterance, std::string& prompt);
 
-            int setContext(ParametersSpeechContext& context);
-
-            int process(const std::string& utterance, std::string& prompt);
+            static const char* getErrorDescription(SpeechInterpretation::Error error_code);
 
         private:
 
+            bool isMatch(const std::string& utterance, const std::string& match);
+            bool isRequiredMatch(unsigned int& iUtterance, unsigned int& iMatch, const std::string& utterance, const std::string& match);
+            bool isOptionalMatch(unsigned int& iUtterance, unsigned int& iMatch, const std::string& utterance, const std::string& match);
+            bool isVariableMatch(unsigned int& iUtterance, unsigned int& iMatch, const std::string& utterance, const std::string& match);
 
-/*
-            int findMatch();
-
-            int findOptional();
-            int findRequired();
-            int findVariable();
-*/
+            std::string file_path_;
             std::string dictionary_name_;
-            std::string interpretation_;
-/*
-            unsigned int line_index_;
-            bool do_store_variable_;
-*/
+            std::string dictionary_description_;
 
+            std::shared_ptr<nlohmann::json> json_;
 
+            VariableMap map_;
     };
 }
 
