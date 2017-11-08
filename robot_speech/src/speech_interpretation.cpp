@@ -98,18 +98,17 @@ bool SpeechInterpretation::isMatch(const std::string& utterance, const std::stri
     unsigned int iUtterance;
 
     reached_utterance_end = false;
-    iUtterance; = 0;
+    iUtterance = 0;
 
     for (unsigned int iMatch = 0; iMatch < match.length(); iMatch++)
     {
-        if (utterance[iUtterance] == match[iMatch] && !reached_utterance_end)
+        if (match[iMatch] == '<')
         {
-            iUtterance++;
-        }
+            if (reached_utterance_end)
+                return false;
 
-        else if (match[iMatch] == '<' && !reached_utterance_end)
-        {
-            isRequiredMatch(iUtterance, iMatch, utterance, match);
+            if (!isRequiredMatch(iUtterance, iMatch, utterance, match))
+                return false;
         }
 
         else if (match[iMatch] == '[')
@@ -117,9 +116,21 @@ bool SpeechInterpretation::isMatch(const std::string& utterance, const std::stri
             isOptionalMatch(iUtterance, iMatch, utterance, match);
         }
 
-        else if (match[iMatch] == '(' && !reached_utterance_end)
+        else if (match[iMatch] == '(')
         {
-            isVariableMatch(iUtterance, iMatch, utterance, match);
+            if (reached_utterance_end)
+                return false;
+
+            if (!isVariableMatch(iUtterance, iMatch, utterance, match))
+                return false;
+        }
+
+        else if (!reached_utterance_end)
+        {
+            if (utterance[iUtterance] == match[iMatch])
+                iUtterance++;
+            else
+                return false;
         }
 
         else
@@ -131,12 +142,16 @@ bool SpeechInterpretation::isMatch(const std::string& utterance, const std::stri
             reached_utterance_end = true;
     }
 
+    if (iUtterance < utterance.length())
+        return false;    
+
     return true;
 }
 
 bool SpeechInterpretation::isRequiredMatch(unsigned int& iUtterance, unsigned int& iMatch, const std::string& utterance, const std::string& match)
 {
     bool no_match;
+    bool reached_utterance_end;
     unsigned int iTempMatch;
     unsigned int iTempUtterance;
 
@@ -146,14 +161,12 @@ bool SpeechInterpretation::isRequiredMatch(unsigned int& iUtterance, unsigned in
 
     for (iTempMatch = iMatch+1; iMatch < match.length(); iTempMatch++)
     {
-        if (utterance[iTempUtterance] == match[iTempMatch] && !no_match)
+        if (match[iTempMatch] == '<' && !no_match)
         {
-            iTempUtterance++;
-        }
-
-        else if (match[iTempMatch] == '<' && !no_match)
-        {
-            isRequiredMatch(iTempUtterance, iTempMatch, utterance, match);
+            if (reached_utterance_end)
+                no_match = true;
+            else if (!isRequiredMatch(iTempUtterance, iTempMatch, utterance, match))
+                no_match = true;
         }
 
         else if (match[iTempMatch] == '[' && !no_match)
@@ -163,7 +176,10 @@ bool SpeechInterpretation::isRequiredMatch(unsigned int& iUtterance, unsigned in
 
         else if (match[iTempMatch] == '(' && !no_match)
         {
-            isVariableMatch(iTempUtterance, iTempMatch, utterance, match);
+            if (reached_utterance_end)
+                no_match = true;
+            else if (!isVariableMatch(iTempUtterance, iTempMatch, utterance, match))
+                no_match = true;
         }
 
         else if (match[iTempMatch] == ',')
@@ -171,22 +187,31 @@ bool SpeechInterpretation::isRequiredMatch(unsigned int& iUtterance, unsigned in
             if (!no_match)
                 break;
 
-            iTempUtterance = iUtterance;
             no_match = false;
+            reached_utterance_end = false;
+            iTempUtterance = iUtterance;
         }
 
         else if (match[iTempMatch] == '>')
         {
-            if (!no_match)
-                break;
+            break;
+        }
 
-            return false;
+        else if (!reached_utterance_end && !no_match)
+        {
+            if (utterance[iTempUtterance] == match[iTempMatch])
+                iTempUtterance++;
+            else
+                no_match = true;
         }
 
         else
         {
             no_match = true;
         }
+
+        if (iTempUtterance >= utterance.length())
+            reached_utterance_end = true;
     }
 
     if (iTempMatch >= match.length())
@@ -198,31 +223,36 @@ bool SpeechInterpretation::isRequiredMatch(unsigned int& iUtterance, unsigned in
     while (match[iTempMatch] != '>')
         iTempMatch++;
 
-    iUtterance = iTempUtterance;
     iMatch = iTempMatch;
 
+    if (no_match)
+        return false;
+
+    iUtterance = iTempUtterance;
     return true;
 }
 
 bool SpeechInterpretation::isOptionalMatch(unsigned int& iUtterance, unsigned int& iMatch, const std::string& utterance, const std::string& match)
 {
     bool no_match;
+    bool reached_utterance_end;
     unsigned int iTempUtterance;
     unsigned int iTempMatch;
 
     no_match = false;
     iTempUtterance = iUtterance;
 
+    if (iTempUtterance >= utterance.length())
+        reached_utterance_end = true;
+
     for (iTempMatch = iMatch+1; iMatch < match.length(); iTempMatch++)
     {
-        if (utterance[iTempUtterance] == match[iTempMatch] && !no_match)
+        if (match[iTempMatch] == '<' && !no_match)
         {
-            iTempUtterance++;
-        }
-
-        else if (match[iTempMatch] == '<' && !no_match)
-        {
-            isRequiredMatch(iTempUtterance, iTempMatch, utterance, match);
+            if (reached_utterance_end)
+                no_match = true;
+            else if (!isRequiredMatch(iTempUtterance, iTempMatch, utterance, match))
+                no_match = true;
         }
 
         else if (match[iTempMatch] == '[' && !no_match)
@@ -232,21 +262,32 @@ bool SpeechInterpretation::isOptionalMatch(unsigned int& iUtterance, unsigned in
 
         else if (match[iTempMatch] == '(' && !no_match)
         {
-            isVariableMatch(iTempUtterance, iTempMatch, utterance, match);
+            if (reached_utterance_end)
+                no_match = true;
+            else if (!isVariableMatch(iTempUtterance, iTempMatch, utterance, match))
+                no_match = true;
         }
 
         else if (match[iTempMatch] == ']')
         {
-            if (!no_match)
-                break;
+            break;
+        }
 
-            return false;
+        else if (!reached_utterance_end && !no_match)
+        {
+            if (utterance[iTempUtterance] == match[iTempMatch])
+                iTempUtterance++;
+            else
+                no_match = true;
         }
 
         else
         {
             no_match = true;
         }
+
+        if (iTempUtterance >= utterance.length())
+            reached_utterance_end = true;
     }
 
     if (iTempMatch >= match.length())
@@ -258,9 +299,12 @@ bool SpeechInterpretation::isOptionalMatch(unsigned int& iUtterance, unsigned in
     while (match[iTempMatch] != ']')
         iTempMatch++;
 
-    iUtterance = iTempUtterance;
     iMatch = iTempMatch;
 
+    if (no_match)
+        return false;
+
+    iUtterance = iTempUtterance;
     return true;
 }
 
