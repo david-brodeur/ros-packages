@@ -143,7 +143,7 @@ bool SpeechInterpretation::isMatch(const std::string& utterance, const std::stri
     }
 
     if (iUtterance < utterance.length())
-        return false;    
+        return false;
 
     return true;
 }
@@ -242,6 +242,8 @@ bool SpeechInterpretation::isOptionalMatch(unsigned int& iUtterance, unsigned in
     no_match = false;
     iTempUtterance = iUtterance;
 
+    //std::cout << "\tmatch[" << iMatch+1 << "] = " << match[iMatch+1] << std::endl;
+
     if (iTempUtterance >= utterance.length())
         reached_utterance_end = true;
 
@@ -255,7 +257,7 @@ bool SpeechInterpretation::isOptionalMatch(unsigned int& iUtterance, unsigned in
                 no_match = true;
         }
 
-        else if (match[iTempMatch] == '[' && !no_match)
+        else if (match[iTempMatch] == '[')
         {
             isOptionalMatch(iTempUtterance, iTempMatch, utterance, match);
         }
@@ -372,18 +374,33 @@ int main()
         return 0;        
     }
 
-    error_code = speech_interpretation.process("Bonjour David", prompt);
+    std::string utterance[10];
+    unsigned int iUtterance = 0;
+    utterance[iUtterance++] = "bonjour";
+    utterance[iUtterance++] = "Bonjour";
+    utterance[iUtterance++] = "Allo";
+    utterance[iUtterance++] = "Bonjour David";
+    utterance[iUtterance++] = "Bonjour david";
+    utterance[iUtterance++] = "Bonjour Olivier";
+    utterance[iUtterance++] = "Bonjour mon cher Olivier";
+    utterance[iUtterance++] = "Salut Bonjour";
+    utterance[iUtterance++] = "Bonjour David Brodeur";
+    utterance[iUtterance++] = "Bonjour je m'appelle David";
 
-    if (error_code != SpeechInterpretation::Error::SUCCESS)
+    for (unsigned int i = 0; i < 10; i++)
     {
-        std::cout << SpeechInterpretation::getErrorDescription(error_code) << std::endl;
-        return 0;
-    }
+        error_code = speech_interpretation.process(utterance[i], prompt);
 
-    if (!prompt.empty())
-        std::cout << prompt << std::endl;
-    else
-        std::cout << "No prompt" << std::endl;
+        if (error_code != SpeechInterpretation::Error::SUCCESS)
+        {
+            std::cout << i << " : " << SpeechInterpretation::getErrorDescription(error_code) << std::endl;
+        }
+
+        else if (!prompt.empty())
+            std::cout << i << " : " << prompt << std::endl;
+        else
+            std::cout << i << " : " << "No prompt" << std::endl;
+    }
 
     return 0;
 }

@@ -1,0 +1,10 @@
+{"dictionary": {
+    "name": "Default dictionary",
+    "description": "Default dictionary",
+    "repeat": "[<J,j><', >ai di<t,s> ]",
+    "items": [
+        {"utterance": "[Salut ]<B,b>onjour[[ <mon cher,je m'appelle>] <David[< Masse, Tetreault>],Olivier>]", "prompt": {"default": "bonjour"}},
+        null,
+        {"utterance": "Bonsoir", "prompt": {"default": "bonsoir"}}
+    ]
+}}
