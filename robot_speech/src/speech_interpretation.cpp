@@ -28,12 +28,9 @@ SpeechInterpretation::Error SpeechInterpretation::init()
         dictionary_name_ = (*json_)["dictionary"]["name"];
         dictionary_description_ = (*json_)["dictionary"]["description"];
 
-        std::cout << "Using dictionary ";
-        std::cout << dictionary_name_;
+        std::cout << "Using dictionary " << dictionary_name_ << std::endl;
         std::cout << std::endl;
-        std::cout << std::endl;
-        std::cout << dictionary_description_;
-        std::cout << std::endl;
+        std::cout << dictionary_description_ << std::endl;
     }
 
     else
@@ -102,6 +99,7 @@ bool SpeechInterpretation::isMatch(const std::string& utterance, const std::stri
 
     for (unsigned int iMatch = 0; iMatch < match.length(); iMatch++)
     {
+        // REUIRED elements are enclosed within '<' and '>' tags
         if (match[iMatch] == '<')
         {
             if (reached_utterance_end)
@@ -111,11 +109,25 @@ bool SpeechInterpretation::isMatch(const std::string& utterance, const std::stri
                 return false;
         }
 
+        else if (match[iMatch] == '>')
+        {
+            std::cout << "[SpeechInterpretation] No opening tag '<' for required element." << std::endl;
+            return false;
+        }
+
+        // OPTIONAL elements are enclosed within '[' and ']' tags
         else if (match[iMatch] == '[')
         {
             isOptionalMatch(iUtterance, iMatch, utterance, match);
         }
 
+        else if (match[iMatch] == ']')
+        {
+            std::cout << "[SpeechInterpretation] No opening tag '[' for optional element." << std::endl;
+            return false;
+        }
+
+        // VARIABLE elements are enclosed within '(' and ')' tags
         else if (match[iMatch] == '(')
         {
             if (reached_utterance_end)
@@ -125,6 +137,13 @@ bool SpeechInterpretation::isMatch(const std::string& utterance, const std::stri
                 return false;
         }
 
+        else if (match[iMatch] == ')')
+        {
+            std::cout << "[SpeechInterpretation] No opening tag '(' for variable element." << std::endl;
+            return false;
+        }
+
+        // Check if other characters match
         else if (!reached_utterance_end)
         {
             if (utterance[iUtterance] == match[iMatch])
@@ -156,40 +175,53 @@ bool SpeechInterpretation::isRequiredMatch(unsigned int& iUtterance, unsigned in
     unsigned int iTempUtterance;
 
     no_match = false;
-    reached_utterance_end = false;
     iTempUtterance = iUtterance;
+    reached_utterance_end = (iTempUtterance >= utterance.length());
 
     for (iTempMatch = iMatch+1; iMatch < match.length(); iTempMatch++)
     {
-        if (match[iTempMatch] == '<' && !no_match)
+        // REUIRED elements are enclosed within '<' and '>' tags
+        if (match[iTempMatch] == '<')
         {
-            if (reached_utterance_end)
-                no_match = true;
-            else if (!isRequiredMatch(iTempUtterance, iTempMatch, utterance, match))
+            if (!isRequiredMatch(iTempUtterance, iTempMatch, utterance, match))
                 no_match = true;
         }
 
-        else if (match[iTempMatch] == '[' && !no_match)
+        // OPTIONAL elements are enclosed within '[' and ']' tags
+        else if (match[iTempMatch] == '[')
         {
             isOptionalMatch(iTempUtterance, iTempMatch, utterance, match);
         }
 
+        else if (match[iTempMatch] == ']')
+        {
+            std::cout << "[SpeechInterpretation] No opening tag '[' for optional element." << std::endl;
+            no_match = true;
+        }
+
+        // VARIABLE elements are enclosed within '(' and ')' tags
         else if (match[iTempMatch] == '(' && !no_match)
         {
-            if (reached_utterance_end)
-                no_match = true;
-            else if (!isVariableMatch(iTempUtterance, iTempMatch, utterance, match))
+            if (!isVariableMatch(iTempUtterance, iTempMatch, utterance, match))
                 no_match = true;
         }
 
+        else if (match[iTempMatch] == ')')
+        {
+            std::cout << "[SpeechInterpretation] No opening tag '(' for variable element." << std::endl;
+            no_match = true;
+        }
+
+        // Closing tags ',' and '>' for current REQUIRED element
         else if (match[iTempMatch] == ',')
         {
             if (!no_match)
                 break;
 
             no_match = false;
-            reached_utterance_end = false;
             iTempUtterance = iUtterance;
+
+            reached_utterance_end = (iTempUtterance >= utterance.length());
         }
 
         else if (match[iTempMatch] == '>')
@@ -197,6 +229,7 @@ bool SpeechInterpretation::isRequiredMatch(unsigned int& iUtterance, unsigned in
             break;
         }
 
+        // Check if other characters match
         else if (!reached_utterance_end && !no_match)
         {
             if (utterance[iTempUtterance] == match[iTempMatch])
@@ -210,8 +243,7 @@ bool SpeechInterpretation::isRequiredMatch(unsigned int& iUtterance, unsigned in
             no_match = true;
         }
 
-        if (iTempUtterance >= utterance.length())
-            reached_utterance_end = true;
+        reached_utterance_end = (iTempUtterance >= utterance.length());
     }
 
     if (iTempMatch >= match.length())
@@ -242,39 +274,49 @@ bool SpeechInterpretation::isOptionalMatch(unsigned int& iUtterance, unsigned in
     no_match = false;
     iTempUtterance = iUtterance;
 
-    //std::cout << "\tmatch[" << iMatch+1 << "] = " << match[iMatch+1] << std::endl;
-
-    if (iTempUtterance >= utterance.length())
-        reached_utterance_end = true;
+    reached_utterance_end = (iTempUtterance >= utterance.length());
 
     for (iTempMatch = iMatch+1; iMatch < match.length(); iTempMatch++)
     {
-        if (match[iTempMatch] == '<' && !no_match)
+        // REUIRED elements are enclosed within '<' and '>' tags
+        if (match[iTempMatch] == '<')
         {
-            if (reached_utterance_end)
-                no_match = true;
-            else if (!isRequiredMatch(iTempUtterance, iTempMatch, utterance, match))
+            if (!isRequiredMatch(iTempUtterance, iTempMatch, utterance, match))
                 no_match = true;
         }
 
+        else if (match[iTempMatch] == '>')
+        {
+            std::cout << "[SpeechInterpretation] No opening tag '<' for required element." << std::endl;
+            no_match = true;
+        }
+
+        // OPTIONAL elements are enclosed within '[' and ']' tags
         else if (match[iTempMatch] == '[')
         {
             isOptionalMatch(iTempUtterance, iTempMatch, utterance, match);
         }
 
+        // VARIABLE elements are enclosed within '(' and ')' tags
         else if (match[iTempMatch] == '(' && !no_match)
         {
-            if (reached_utterance_end)
-                no_match = true;
-            else if (!isVariableMatch(iTempUtterance, iTempMatch, utterance, match))
+            if (!isVariableMatch(iTempUtterance, iTempMatch, utterance, match))
                 no_match = true;
         }
 
+        else if (match[iTempMatch] == ')')
+        {
+            std::cout << "[SpeechInterpretation] No opening tag '(' for variable element." << std::endl;
+            no_match = true;
+        }
+
+        // Closing tag ']' for current OPTIONAL element
         else if (match[iTempMatch] == ']')
         {
             break;
         }
 
+        // Check if other characters match
         else if (!reached_utterance_end && !no_match)
         {
             if (utterance[iTempUtterance] == match[iTempMatch])
@@ -288,8 +330,7 @@ bool SpeechInterpretation::isOptionalMatch(unsigned int& iUtterance, unsigned in
             no_match = true;
         }
 
-        if (iTempUtterance >= utterance.length())
-            reached_utterance_end = true;
+        reached_utterance_end = (iTempUtterance >= utterance.length());
     }
 
     if (iTempMatch >= match.length())
@@ -320,6 +361,9 @@ bool SpeechInterpretation::isVariableMatch(unsigned int& iUtterance, unsigned in
     size_t position;
     unsigned int iTempMatch;
 
+    if (iUtterance >= utterance.length())
+        return false;
+
     // Get variable type
     temp = match.substr(iMatch+1);
     position = temp.find(" ");
@@ -334,7 +378,10 @@ bool SpeechInterpretation::isVariableMatch(unsigned int& iUtterance, unsigned in
     position = temp.find(")");
 
     if (position == std::string::npos)
+    {
+        std::cout << "[SpeechInterpretation] No closing tag ')' for variable element." << std::endl;
         return false;
+    }
 
     key = temp.substr(0, position);
 
