@@ -11,7 +11,18 @@ BehaviorAvoidObstacles::BehaviorAvoidObstacles(ros::NodeHandle& nh, ros::NodeHan
 
 BehaviorAvoidObstacles::~BehaviorAvoidObstacles()
 {
+    reset();
+
     delete range_;
+}
+
+void BehaviorAvoidObstacles::init()
+{
+    reset();
+}
+
+void BehaviorAvoidObstacles::reset()
+{
 }
 
 void BehaviorAvoidObstacles::update(geometry_msgs::Twist& command)

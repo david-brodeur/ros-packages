@@ -48,6 +48,9 @@ namespace robot_common
             ///\return the number of Behaviors handled by the Arbitration.
             unsigned int size() { return map_.size(); }
 
+            ///\brief Reset the behavior.
+            void reset();
+
             ///\brief Add a Behavior to the list.
             ///\param p Priority. A higher number value means a higher priority.
             ///\param b Behavior instance pointer.
@@ -90,6 +93,12 @@ namespace robot_common
 
     template <class T>
     Arbitration<T>::~Arbitration()
+    {
+        reset();
+    }
+
+    template <class T>
+    void Arbitration<T>::reset()
     {
         typedef typename BehaviorMap::iterator it;
 

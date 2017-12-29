@@ -38,6 +38,12 @@ namespace robot_behaviors
             ///\brief Class destructor.
             ~BehaviorAvoidObstacles();
 
+            ///\brief Initialize the behavior.
+            void init();
+
+            ///\brief Reset the behavior.
+            void reset();
+
             ///\brief Update the command sent by the arbitration module.
             ///\param command Command to update.
             void update(geometry_msgs::Twist& command);

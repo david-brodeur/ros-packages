@@ -11,7 +11,18 @@ BehaviorTeleopKeyboard::BehaviorTeleopKeyboard(ros::NodeHandle& nh, ros::NodeHan
 
 BehaviorTeleopKeyboard::~BehaviorTeleopKeyboard()
 {
+    reset();
+
     delete keyboard_;
+}
+
+void BehaviorTeleopKeyboard::init()
+{
+    reset();
+}
+
+void BehaviorTeleopKeyboard::reset()
+{
 }
 
 void BehaviorTeleopKeyboard::update(geometry_msgs::Twist& cmd)

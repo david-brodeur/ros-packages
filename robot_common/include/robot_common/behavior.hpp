@@ -52,6 +52,12 @@ namespace robot_common
             ///\brief Disable the behavior.
             void disable() { active_ = false; }
 
+            ///\brief Initialize the behavior.
+            virtual void init() = 0;
+
+            ///\brief Reset the behavior.
+            virtual void reset() = 0;
+
             ///\brief Updates the value of a command to control an actuator.
             ///\param command Command to be updated.
             virtual void update(T& command) = 0;

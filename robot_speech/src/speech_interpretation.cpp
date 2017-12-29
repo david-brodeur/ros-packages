@@ -94,6 +94,8 @@ bool SpeechInterpretation::isMatch(const std::string& utterance, const std::stri
     bool reached_utterance_end;
     unsigned int iUtterance;
 
+    map_.clear();
+
     reached_utterance_end = false;
     iUtterance = 0;
 

@@ -33,6 +33,12 @@ namespace robot_behaviors
             ///\brief Class destructor.
             ~BehaviorMoveForward();
 
+            ///\brief Initialize the behavior.
+            void init();
+
+            ///\brief Reset the behavior.
+            void reset();
+
             ///\brief Updates the value of a command to move the robot forward at constant velocity.
             void update(geometry_msgs::Twist& command);
     };

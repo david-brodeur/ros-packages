@@ -8,6 +8,16 @@ BehaviorMoveForward::BehaviorMoveForward(ros::NodeHandle& nh, std::string behavi
 
 BehaviorMoveForward::~BehaviorMoveForward()
 {
+    reset();
+}
+
+void BehaviorMoveForward::init()
+{
+    reset();
+}
+
+void BehaviorMoveForward::reset()
+{
 }
 
 void BehaviorMoveForward::update(geometry_msgs::Twist& cmd)

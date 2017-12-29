@@ -33,6 +33,12 @@ namespace robot_behaviors
             ///\brief Class destructor.
             ~BehaviorStop();
 
+            ///\brief Initialize the behavior.
+            void init();
+
+            ///\brief Reset the behavior.
+            void reset();
+
             ///\brief Updates the value of a command with a zero linear and angular velocity in all directions.
             void update(geometry_msgs::Twist& command);
     };

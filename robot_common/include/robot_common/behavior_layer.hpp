@@ -115,6 +115,8 @@ namespace robot_common
         {
             Behavior<T>* behavior = factory_->create(behavior_names_[i], nh_, np_);
 
+            behavior->init();
+
             if (behavior)
             {
                 arbitration_->add(behavior_priorities_[i], behavior);

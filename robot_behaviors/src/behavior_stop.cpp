@@ -8,6 +8,16 @@ BehaviorStop::BehaviorStop(ros::NodeHandle& nh, std::string behavior_name) : Bas
 
 BehaviorStop::~BehaviorStop()
 {
+    reset();
+}
+
+void BehaviorStop::init()
+{
+    reset();
+}
+
+void BehaviorStop::reset()
+{
 }
 
 void BehaviorStop::update(geometry_msgs::Twist& cmd)
