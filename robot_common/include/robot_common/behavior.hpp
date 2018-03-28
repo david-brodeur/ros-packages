@@ -4,6 +4,8 @@
 #include <ros/ros.h>
 #include <std_srvs/SetBool.h>
 
+#include <robot_common/behavior_factory2.hpp> // TODO clean the '2'
+
 #include <stdlib.h>
 #include <string.h>
 
