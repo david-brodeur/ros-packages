@@ -11,7 +11,8 @@ find_package(catkin REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Core REQUIRED)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -109,6 +110,9 @@ catkin_package(
 ## Build ##
 ###########
 
+## Qt specific elements
+qt5_wrap_cpp(QT_MOC_HPP speech_tts_qt.hpp)
+
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
@@ -116,15 +120,15 @@ include_directories(
 
  json/json.hpp
 
- robot_speech/speech_interpretation.hpp
+ #robot_speech/speech_interpretation.hpp
 
  ${catkin_INCLUDE_DIRS}
 )
 
+include_directories(${Qt5Widgets_INCLUDE_DIRS})
+
 ## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/robot_speech.cpp
-# )
+#add_library(speech_tts_qt src/speech_tts_qt.cpp)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -147,9 +151,7 @@ add_executable(speech_interpretation src/speech_interpretation.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
+#target_link_libraries(speech_tts_qt ${QT_LIBRARIES} ${catkin_LIBRARIES} Qt5::Widgets)
 
 #############
 ## Install ##
