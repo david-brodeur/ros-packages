@@ -105,7 +105,7 @@ void GuiMainWindow::addStatusBarLabel()
 {
 }
 
-int GuiMainWindow::insertTabPage(int index, GuiCentralWidget* page, std::string label, QIcon* icon)
+void GuiMainWindow::insertTabPage(int index, GuiCentralWidget* page, std::string label, QIcon* icon)
 {
     QAction* action;
     std::vector<QAction*>::iterator it;

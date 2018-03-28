@@ -1,4 +1,4 @@
-#include <robot_gui/gui_display_camera.hpp>
+#include <robot_gui/gui_central_widget.hpp>
 
 using namespace robot_gui;
 

@@ -93,7 +93,7 @@ namespace robot_gui
             ///\param label Label of the tab.
             ///\param icon Icon of the tab.
             ///\return index of the inserted tab.
-            int insertTabPage(int index, GuiCentralWidget* page, std::string label, QIcon* icon = NULL);
+            void insertTabPage(int index, GuiCentralWidget* page, std::string label, QIcon* icon = NULL);
 
             ///\brief Add a toolbar item.
             ///\param index Index of the item.
@@ -101,7 +101,7 @@ namespace robot_gui
             ///\param label Label of the item.
             ///\param icon Icon of the item.
             ///\return index of the inserted item.
-            int insertToolBoxItem(int index, QWidget* item,  std::string label, QIcon* icon = NULL);
+            void insertToolBoxItem(int index, QWidget* item,  std::string label, QIcon* icon = NULL);
 
             ///\brief Add a statusbar to the mainwindow.
 //            void addDockWidget();
