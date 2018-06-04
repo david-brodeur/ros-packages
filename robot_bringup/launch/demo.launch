@@ -3,6 +3,6 @@
     <!-- Demo for robotic applications in development -->
 
     <include file="$(find robot_behaviors)/launch/behavior_layer_mobile.launch"/>
-    <include file="$(find robot_gui)/launch/gui_speech.launch"/>
+    <!-- <include file="$(find robot_gui)/launch/gui_speech.launch"/> -->
 
 </launch>

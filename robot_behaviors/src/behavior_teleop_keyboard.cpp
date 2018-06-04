@@ -2,6 +2,8 @@
 
 using namespace robot_behaviors;
 
+REGISTERIMPL(geometry_msgs::Twist, BehaviorTeleopKeyboard);
+
 BehaviorTeleopKeyboard::BehaviorTeleopKeyboard(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name) : BaseType(nh, behavior_name)
 {
     np.param("control_keyboard_topic_name", control_keyboard_topic_name_, std::string("/teleop/keyboard"));

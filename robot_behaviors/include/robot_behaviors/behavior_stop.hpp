@@ -27,8 +27,9 @@ namespace robot_behaviors
 
             ///\brief Class constructor.
             ///\param nh NodeHandle.
+            ///\param np Private NodeHandle.
             ///\param behavior_name Name of the Behavior.
-            BehaviorStop(ros::NodeHandle& nh, std::string behavior_name = "/behavior/stop");
+            BehaviorStop(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name = "/behavior/stop");
 
             ///\brief Class destructor.
             ~BehaviorStop();
@@ -41,6 +42,8 @@ namespace robot_behaviors
 
             ///\brief Updates the value of a command with a zero linear and angular velocity in all directions.
             void update(geometry_msgs::Twist& command);
+
+            REGISTER(geometry_msgs::Twist, BehaviorStop);
     };
 }
 

@@ -27,8 +27,9 @@ namespace robot_behaviors
 
             ///\brief Class constructor.
             ///\param nh NodeHandle.
+            ///\param np Private NodeHandle.
             ///\param behavior_name Name of the Behavior.
-            BehaviorMoveForward(ros::NodeHandle& nh, std::string behavior_name = "/behavior/move_forward");
+            BehaviorMoveForward(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name = "/behavior/move_forward");
 
             ///\brief Class destructor.
             ~BehaviorMoveForward();
@@ -41,6 +42,8 @@ namespace robot_behaviors
 
             ///\brief Updates the value of a command to move the robot forward at constant velocity.
             void update(geometry_msgs::Twist& command);
+
+            REGISTER(geometry_msgs::Twist, BehaviorMoveForward);
     };
 }
 

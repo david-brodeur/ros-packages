@@ -60,6 +60,8 @@ namespace robot_behaviors
             std::string perception_range_topic_name_;           ///< ROS parameter - Name of the perception ROS topic.
 
             robot_perceptions::PerceptionRangeDistance* range_; ///< Range distance Perception.
+
+            REGISTER(geometry_msgs::Twist, BehaviorAvoidObstacles);
     };
 }
 

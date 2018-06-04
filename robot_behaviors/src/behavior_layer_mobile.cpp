@@ -4,12 +4,12 @@ using namespace robot_behaviors;
 
 BehaviorLayerMobile::BehaviorLayerMobile(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_layer_name) : BaseType(nh, np, behavior_layer_name) {
 
-	factory_ = new BehaviorFactoryMobile("/behavior_factory/mobile");
+	//factory_ = new BehaviorFactoryMobile("/behavior_factory/mobile");
 }
 
 BehaviorLayerMobile::~BehaviorLayerMobile() {
 
-	delete factory_;
+	//delete factory_;
 }
 
 int main(int argc, char** argv) {

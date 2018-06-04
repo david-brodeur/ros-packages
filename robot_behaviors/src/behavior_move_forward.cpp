@@ -2,7 +2,9 @@
 
 using namespace robot_behaviors;
 
-BehaviorMoveForward::BehaviorMoveForward(ros::NodeHandle& nh, std::string behavior_name) : BaseType(nh, behavior_name)
+REGISTERIMPL(geometry_msgs::Twist, BehaviorMoveForward);
+
+BehaviorMoveForward::BehaviorMoveForward(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name) : BaseType(nh, behavior_name)
 {
 }
 

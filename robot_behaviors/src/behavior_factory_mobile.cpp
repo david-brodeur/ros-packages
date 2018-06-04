@@ -19,9 +19,9 @@ robot_common::Behavior<geometry_msgs::Twist>* BehaviorFactoryMobile::create(std:
     if (behavior_name == "avoid")
         return new BehaviorAvoidObstacles(nh, np);
     else if (behavior_name == "move")
-        return new BehaviorMoveForward(nh);
+        return new BehaviorMoveForward(nh, np);
     else if (behavior_name == "stop")
-        return new BehaviorStop(nh);
+        return new BehaviorStop(nh, np);
     else
         return NULL;
 }

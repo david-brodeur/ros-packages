@@ -1,6 +1,8 @@
 #ifndef BEHAVIOR_CREATOR_IMPL_HPP
 #define BEHAVIOR_CREATOR_IMPL_HPP
 
+#include <ros/ros.h>
+
 #include <robot_common/behavior_creator.hpp>
 
 #include <string.h>
@@ -29,12 +31,13 @@ namespace robot_common
             virtual ~BehaviorCreatorImpl();
 
             ///\brief Create a Behavior instance
-            virtual Behavior<T>* create();
+            virtual Behavior<T>* create(ros::NodeHandle& nh, ros::NodeHandle& np);
     };
 
     template <class T, class T2>
     BehaviorCreatorImpl<T,T2>::BehaviorCreatorImpl(const std::string& behavior_class_name) : BehaviorCreator<T>(behavior_class_name)
     {
+        ROS_INFO("BehaviorCreatorImpl Constructor");
     }
 
     template <class T, class T2>
@@ -43,9 +46,9 @@ namespace robot_common
     }
 
     template <class T, class T2>
-    Behavior<T>* BehaviorCreatorImpl<T,T2>::create()
+    Behavior<T>* BehaviorCreatorImpl<T,T2>::create(ros::NodeHandle& nh, ros::NodeHandle& np)
     {
-        return new T2;
+        return new T2(nh, np);
     }
 }
 

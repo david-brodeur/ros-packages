@@ -5,7 +5,8 @@
 
 #include <robot_common/arbitration.hpp>
 #include <robot_common/behavior.hpp>
-#include <robot_common/behavior_factory.hpp>
+//#include <robot_common/behavior_factory.hpp>
+#include <robot_common/behavior_factory2.hpp>
 
 #include <stdlib.h>
 #include <string.h>
@@ -49,7 +50,7 @@ namespace robot_common
 
         protected:
 
-            BehaviorFactory<T>* factory_; ///< BehaviorFactory module.
+            //BehaviorFactory<T>* factory_; ///< BehaviorFactory module.
 
         private:
 
@@ -86,14 +87,14 @@ namespace robot_common
         np.getParam("behavior_names", behavior_names_);
         np.getParam("behavior_priorities", behavior_priorities_);
 
-        arbitration_ = NULL;
+        arbitration_ = nullptr;
     }
 
     template <class T>
     BehaviorLayer<T>::~BehaviorLayer()
     {
         // Delete the Arbitration module.
-        if (arbitration_ != NULL)
+        if (arbitration_ != nullptr)
         {
             delete arbitration_;
         }
@@ -104,28 +105,20 @@ namespace robot_common
     {
         reset();
 
-        if (factory_ == NULL)
-        {
-            ROS_ERROR("No BehaviorFactory available.");
-            return 1;
-        }
+        ROS_INFO("Initializing behavior layer");
 
         // Create all Behaviors for the layer
         for (unsigned int i = 0; i < behavior_names_.size(); i++)
         {
-            Behavior<T>* behavior = factory_->create(behavior_names_[i], nh_, np_);
+            //Behavior<T>* behavior = factory_->create(behavior_names_[i], nh_, np_);
+            Behavior<T>* behavior = BehaviorFactory2<T>::create(behavior_names_[i], nh_, np_);
 
-            behavior->init();
+            //behavior->init();
 
             if (behavior)
-            {
                 arbitration_->add(behavior_priorities_[i], behavior);
-            }
-
             else
-            {
                 ROS_ERROR("Unable to create behavior %s", behavior_names_[i].c_str());
-            }
         }
 
         return 0;
@@ -134,7 +127,7 @@ namespace robot_common
     template <class T>
     void BehaviorLayer<T>::reset()
     {
-        if (arbitration_ != NULL)
+        if (arbitration_ != nullptr)
         {
             delete arbitration_;
         }

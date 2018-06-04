@@ -2,6 +2,8 @@
 
 using namespace robot_behaviors;
 
+//REGISTERIMPL(geometry_msgs::Twist, BehaviorAvoidObstacles);
+
 BehaviorAvoidObstacles::BehaviorAvoidObstacles(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name) : BaseType(nh, behavior_name)
 {
     np.param("perception_range_topic_name", perception_range_topic_name_, std::string("/scan"));

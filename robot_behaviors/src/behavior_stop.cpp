@@ -2,7 +2,9 @@
 
 using namespace robot_behaviors;
 
-BehaviorStop::BehaviorStop(ros::NodeHandle& nh, std::string behavior_name) : BaseType(nh, behavior_name)
+REGISTERIMPL(geometry_msgs::Twist, BehaviorStop);
+
+BehaviorStop::BehaviorStop(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name) : BaseType(nh, behavior_name)
 {
 }
 

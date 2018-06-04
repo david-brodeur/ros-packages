@@ -18,7 +18,7 @@
         <param name="arbitration_name" value="$(arg arbitration_name)"/>
         <param name="arbitration_rate" value="$(arg arbitration_rate)"/>
 
-        <rosparam param="behavior_names">[avoid, move, stop]</rosparam>
+        <rosparam param="behavior_names">[BehaviorAvoidObstacles, BehaviorMoveForward, BehaviorStop]</rosparam>
         <rosparam param="behavior_priorities">[2, 1, 3]</rosparam>
 
         <param name="perception_range_topic_name" value="$(arg perception_range_topic_name)"/>
