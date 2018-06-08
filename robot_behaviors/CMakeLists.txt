@@ -130,8 +130,6 @@ include_directories(
 
   robot_behaviors/behavior_layer_mobile.hpp
 
-  robot_behaviors/behavior_factory_mobile.hpp
-
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -141,8 +139,6 @@ add_library(robot_behaviors
   src/behavior_avoid_obstacles.cpp
   src/behavior_move_forward.cpp
   src/behavior_stop.cpp
-
-  src/behavior_factory_mobile.cpp
 )
 
 ## Add cmake target dependencies of the library

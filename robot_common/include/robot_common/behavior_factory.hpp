@@ -99,4 +99,4 @@ namespace robot_common
         const robot_common::BehaviorCreatorImpl<behavior_msg_type, behavior_class_name> behavior_class_name::creator(#behavior_class_name);
 }
 
-#endif // BEHAVIOR_FACTORY2_HPP
+#endif // BEHAVIOR_FACTORY_HPP

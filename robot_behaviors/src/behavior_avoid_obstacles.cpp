@@ -2,7 +2,7 @@
 
 using namespace robot_behaviors;
 
-//REGISTERIMPL(geometry_msgs::Twist, BehaviorAvoidObstacles);
+REGISTERIMPL(geometry_msgs::Twist, BehaviorAvoidObstacles);
 
 BehaviorAvoidObstacles::BehaviorAvoidObstacles(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name) : BaseType(nh, behavior_name)
 {

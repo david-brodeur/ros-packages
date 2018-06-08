@@ -22,7 +22,7 @@ namespace robot_common
     class Behavior;
 
     template <class T>
-    class BehaviorFactory2;
+    class BehaviorFactory;
 
     template <class T>
     class BehaviorCreator

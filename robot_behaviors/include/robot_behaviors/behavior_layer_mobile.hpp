@@ -6,7 +6,6 @@
 #include <geometry_msgs/Twist.h>
 
 #include <robot_common/behavior_layer.hpp>
-#include <robot_behaviors/behavior_factory_mobile.hpp>
 
 /*! 
  *  \brief     BehaviorLayerMobile

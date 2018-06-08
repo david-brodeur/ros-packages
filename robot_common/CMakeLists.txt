@@ -124,6 +124,9 @@ include_directories(
 
   robot_common/arbitration.hpp
   robot_common/behavior.hpp
+  robot_common/behavior_creator.hpp
+  robot_common/behavior_creator_impl.hpp
+  robot_common/behavior_factory.hpp
   robot_common/behavior_layer.hpp
   robot_common/control.hpp
   robot_common/definitions.hpp
