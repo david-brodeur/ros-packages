@@ -5,8 +5,7 @@
 
 #include <robot_common/arbitration.hpp>
 #include <robot_common/behavior.hpp>
-//#include <robot_common/behavior_factory.hpp>
-#include <robot_common/behavior_factory2.hpp>
+#include <robot_common/behavior_factory.hpp>
 
 #include <stdlib.h>
 #include <string.h>
@@ -111,7 +110,7 @@ namespace robot_common
         for (unsigned int i = 0; i < behavior_names_.size(); i++)
         {
             //Behavior<T>* behavior = factory_->create(behavior_names_[i], nh_, np_);
-            Behavior<T>* behavior = BehaviorFactory2<T>::create(behavior_names_[i], nh_, np_);
+            Behavior<T>* behavior = BehaviorFactory<T>::create(behavior_names_[i], nh_, np_);
 
             //behavior->init();
 

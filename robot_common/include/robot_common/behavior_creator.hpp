@@ -3,7 +3,7 @@
 
 #include <ros/ros.h>
 
-#include <robot_common/behavior_factory2.hpp>
+#include <robot_common/behavior_factory.hpp>
 
 #include <string.h>
 
@@ -44,7 +44,7 @@ namespace robot_common
     BehaviorCreator<T>::BehaviorCreator(const std::string& behavior_class_name)
     {
         ROS_INFO("BehaviorCreator Constructor");
-        BehaviorFactory2<T>::registerit(behavior_class_name, this);
+        BehaviorFactory<T>::registerit(behavior_class_name, this);
     }
 }
 

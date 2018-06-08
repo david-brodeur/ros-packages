@@ -1,5 +1,5 @@
-#ifndef BEHAVIOR_FACTORY2_HPP
-#define BEHAVIOR_FACTORY2_HPP
+#ifndef BEHAVIOR_FACTORY_HPP
+#define BEHAVIOR_FACTORY_HPP
 
 #include <ros/ros.h>
 
@@ -10,7 +10,7 @@
 #include <string.h>
 
 /*! 
- *  \brief     BehaviorFactory2
+ *  \brief     BehaviorFactory
  *  \details   This class creates Behaviors.
  *  \author    David Brodeur <David.Brodeur@USherbrooke.ca>
  *  \version   0.1
@@ -30,7 +30,7 @@ namespace robot_common
     class BehaviorCreatorImpl;
 
     template <class T>
-    class BehaviorFactory2
+    class BehaviorFactory
     {
         public:
 
@@ -63,7 +63,7 @@ namespace robot_common
     };
 
     template <class T>
-    Behavior<T>* BehaviorFactory2<T>::create(std::string& behavior_class_name, ros::NodeHandle& nh, ros::NodeHandle& np)
+    Behavior<T>* BehaviorFactory<T>::create(std::string& behavior_class_name, ros::NodeHandle& nh, ros::NodeHandle& np)
     {
         typename BehaviorCreatorMap::iterator itr = get_map().find(behavior_class_name);
 
@@ -77,14 +77,14 @@ namespace robot_common
     }
 
     template <class T>
-    void BehaviorFactory2<T>::registerit(const std::string& behavior_class_name, BehaviorCreator<T>* creator)
+    void BehaviorFactory<T>::registerit(const std::string& behavior_class_name, BehaviorCreator<T>* creator)
     {
         ROS_INFO("Registering %s", behavior_class_name.c_str());
         get_map()[behavior_class_name] = creator;
     }
 
     template <class T>
-    std::map<std::string, BehaviorCreator<T>*>& BehaviorFactory2<T>::get_map()
+    std::map<std::string, BehaviorCreator<T>*>& BehaviorFactory<T>::get_map()
     {
         static BehaviorCreatorMap creator_map;
         return creator_map;
@@ -93,10 +93,10 @@ namespace robot_common
 
     #define REGISTER(behavior_msg_type, behavior_class_name) \
         private: \
-        static const robot_common::BehaviorCreatorImpl<behavior_msg_type, robot_behaviors::behavior_class_name> creator;
+        static const robot_common::BehaviorCreatorImpl<behavior_msg_type, behavior_class_name> creator;
 
     #define REGISTERIMPL(behavior_msg_type, behavior_class_name) \
-        const robot_common::BehaviorCreatorImpl<behavior_msg_type, robot_behaviors::behavior_class_name> robot_behaviors::behavior_class_name::creator(#behavior_class_name);
+        const robot_common::BehaviorCreatorImpl<behavior_msg_type, behavior_class_name> behavior_class_name::creator(#behavior_class_name);
 }
 
 #endif // BEHAVIOR_FACTORY2_HPP
