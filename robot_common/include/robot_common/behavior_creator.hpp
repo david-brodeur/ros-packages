@@ -11,6 +11,7 @@
  *  \brief     BehaviorCreator
  *  \details   This class is the base class to create a Behavior.
  *  \author    David Brodeur <David.Brodeur@USherbrooke.ca>
+ *  \remark    Inspired from http://blog.fourthwoods.com/2011/06/04/factory-design-pattern-in-c/
  *  \version   0.1
  *  \date      2018
  *  \copyright GNU Public License.
