@@ -14,7 +14,7 @@
  *  \details   This class creates Behaviors.
  *  \author    David Brodeur <David.Brodeur@USherbrooke.ca>
  *  \remark    Inspired from http://blog.fourthwoods.com/2011/06/04/factory-design-pattern-in-c/
- *  \version   0.1
+ *  \version   0.0.1
  *  \date      2017
  *  \copyright GNU Public License.
  */

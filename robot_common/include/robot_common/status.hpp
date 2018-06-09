@@ -10,7 +10,7 @@
  *  \details   This class subscribes to an actuator and outputs status 
  *             value in a more simple way.
  *  \author    David Brodeur <David.Brodeur@USherbrooke.ca>
- *  \version   0.1
+ *  \version   0.0.1
  *  \date      2017
  *  \copyright GNU Public License.
  */

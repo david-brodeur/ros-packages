@@ -13,7 +13,7 @@
  *  \author    François Ferland
  *  \remark    Based on code by François Ferland for course GEI740 at 
  *             Univerity of Sherbrooke
- *  \version   0.1
+ *  \version   0.0.1
  *  \date      2017
  *  \copyright GNU Public License.
  */

@@ -15,7 +15,7 @@
  *  \details   This class provides a complete behavior-based 
  *             layer for a robotic application.
  *  \author    David Brodeur <David.Brodeur@USherbrooke.ca>
- *  \version   0.1
+ *  \version   0.0.1
  *  \date      2017
  *  \copyright GNU Public License.
  */
