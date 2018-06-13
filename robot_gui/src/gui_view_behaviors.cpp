@@ -7,24 +7,17 @@
 #include <QColor>
 #include <QPixmap>
 #include <QPointF>
+#include <QPushButton>
 
 using namespace robot_gui;
 
 GuiViewBehaviors::GuiViewBehaviors() : GuiCentralWidget()
 {
-    view_ = new QGraphicsView();
-    scene_ = new QGraphicsScene(this);
-    view_->setScene(scene_);
-
-    layout()->addWidget(view_);
 }
 
 GuiViewBehaviors::~GuiViewBehaviors()
 {
-    // TODO remove arrows
-    // TODO remove items in general
-    delete scene_;
-    delete view_;
+    reset();
 }
 
 void GuiViewBehaviors::setNames(std::vector<std::string>& name)
@@ -40,6 +33,43 @@ void GuiViewBehaviors::setPriorities(std::vector<int>& priority)
 void GuiViewBehaviors::setActivations(std::vector<uint8_t>& activation)
 {
     activation_ = activation;
+}
+
+void GuiViewBehaviors::init()
+{
+    reset();
+
+    widget_ = new QWidget();
+    hlayout_ = new QHBoxLayout();
+
+    view_ = new QGraphicsView();
+    scene_ = new QGraphicsScene(this);
+    view_->setScene(scene_);
+
+    group_box_settings_ = new QGroupBox("Settings");
+    layout_settings_ = new QVBoxLayout();
+
+    for (unsigned int iBehavior = 0; iBehavior < name_.size(); iBehavior++)
+    {
+        QPushButton* pushbutton = new QPushButton(QString::fromStdString(name_[iBehavior]));
+        //QAction* action;
+        layout_settings_->addWidget(pushbutton);
+    }
+
+    layout_settings_->addStretch(1);
+
+    group_box_settings_->setLayout(layout_settings_);
+
+    hlayout_->addWidget(view_);
+    hlayout_->addWidget(group_box_settings_);
+
+    widget_->setLayout(hlayout_);
+
+    layout()->addWidget(widget_);
+}
+
+void GuiViewBehaviors::reset()
+{
 }
 
 // TODO replace hard-coded values
@@ -106,5 +136,9 @@ void GuiViewBehaviors::update()
     }
 
     view_->fitInView(scene_->sceneRect(), Qt::KeepAspectRatio);
+}
+
+void GuiViewBehaviors::activate(bool checked)
+{
 }
 

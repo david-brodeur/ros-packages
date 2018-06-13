@@ -10,39 +10,17 @@ GuiSpeech::GuiSpeech(ros::NodeHandle& nh, ros::NodeHandle& np)
     np.param("image_topic_name", image_topic_name_, std::string("/sensor_camera/image_raw"));
     np.param("arbitration_name", arbitration_name_, std::string("/arbitration"));
 
-    ParametersGuiMainWindow parameters;
-    parameters.p_file_menu_name = "File";
-    parameters.p_edit_menu_name = "Edit";
-    parameters.p_view_menu_name = "View";
-    parameters.p_param_menu_name = "Parameters";
-    parameters.p_about_menu_name = "About";
-    parameters.p_update_time_interval = 40;
-
-    main_window_ = new GuiMainWindow(&parameters, gui_name_);
-
-    display_camera_ = new GuiDisplayCamera();
-    view_behaviors_ = new GuiViewBehaviors();
-
-    main_window_->setLogo(gui_logo_);
-
-    QIcon icon = main_window_->style()->standardIcon(QStyle::SP_ComputerIcon);
-    main_window_->insertTabPage(0, display_camera_, "Camera", &icon);
-    main_window_->insertTabPage(1, view_behaviors_, "Behaviors", &icon);
-
-    main_window_->show();
-
     it_ = new image_transport::ImageTransport(nh);
     image_sub_ = it_->subscribe(image_topic_name_, 1, &GuiSpeech::image_cb, this);
 
     behavior_map_info_client_ = nh.serviceClient<robot_common::BehaviorMapInfo>(arbitration_name_ + "/list");
-
-    behavior_update_timer_ = new QTimer(this);
-    connect(behavior_update_timer_, SIGNAL(timeout()), this, SLOT(updateBehaviorMapInfo()));
-    behavior_update_timer_->start(parameters.p_update_time_interval);
 }
 
 GuiSpeech::~GuiSpeech()
 {
+    reset();
+
+    delete it_;
 }
 
 std::string GuiSpeech::name()
@@ -51,6 +29,43 @@ std::string GuiSpeech::name()
         return main_window_->name();
     else
         return "";
+}
+
+void GuiSpeech::init()
+{
+    reset();
+
+    ParametersGuiMainWindow parameters;
+    parameters.p_file_menu_name = "File";
+    parameters.p_edit_menu_name = "Edit";
+    parameters.p_view_menu_name = "View";
+    parameters.p_param_menu_name = "Parameters";
+    parameters.p_about_menu_name = "About";
+    parameters.p_update_time_interval = 40;
+
+    main_window_ = new GuiMainWindow(gui_name_);
+    main_window_->init(&parameters);
+    main_window_->setLogo(gui_logo_);
+
+    view_perceptions_ = new GuiViewPerceptions();
+
+    view_behaviors_ = new GuiViewBehaviors();
+    updateBehaviorMapInfo();
+    view_behaviors_->init();
+
+    QIcon icon = main_window_->style()->standardIcon(QStyle::SP_ComputerIcon);
+    main_window_->insertTabPage(0, view_perceptions_, "Perceptions", &icon);
+    main_window_->insertTabPage(1, view_behaviors_, "Behaviors", &icon);
+
+    main_window_->show();
+
+    behavior_update_timer_ = new QTimer(this);
+    connect(behavior_update_timer_, SIGNAL(timeout()), this, SLOT(updateBehaviorMapInfo()));
+    behavior_update_timer_->start(parameters.p_update_time_interval);
+}
+
+void GuiSpeech::reset()
+{
 }
 
 void GuiSpeech::updateBehaviorMapInfo()
@@ -88,7 +103,7 @@ void GuiSpeech::image_cb(const sensor_msgs::ImageConstPtr& msg)
 
         cv::cvtColor(cv_ptr_->image, cv_ptr_->image, CV_BGR2RGB);
         image = QImage((const unsigned char*)(cv_ptr_->image.data), cv_ptr_->image.cols, cv_ptr_->image.rows, QImage::Format_RGB888);
-        display_camera_->setImage(image);
+        view_perceptions_->setImage(image);
     }
 
     catch (cv_bridge::Exception& e)
@@ -108,6 +123,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     GuiSpeech gui(nh, np);
+    gui.init();
 
     return app.exec();
 }

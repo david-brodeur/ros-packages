@@ -1,13 +1,26 @@
 #include <robot_gui/gui_mainwindow.hpp>
 
 #include <QDebug>
+#include <QMessageBox>
 #include <QPlastiqueStyle>
+
+#include <iostream>
 
 using namespace robot_gui;
 
-GuiMainWindow::GuiMainWindow(ParametersGuiMainWindow* parameters, std::string gui_name)
+GuiMainWindow::GuiMainWindow(std::string gui_name)
 {
     gui_name_ = gui_name;
+}
+
+GuiMainWindow::~GuiMainWindow()
+{
+    reset();
+}
+
+void GuiMainWindow::init(ParametersGuiMainWindow* parameters)
+{
+    reset();
 
     // Style
     style_ = new QPlastiqueStyle();
@@ -27,9 +40,6 @@ GuiMainWindow::GuiMainWindow(ParametersGuiMainWindow* parameters, std::string gu
     // ToolBar
     view_toolbar_ = addToolBar(QString::fromStdString(parameters->p_view_menu_name));
 
-    // ToolBox
-    toolbox_ = new QToolBox();
-
     // Central widget
     tab_widget_ = new QTabWidget();
     tab_widget_->setTabPosition(QTabWidget::North);
@@ -38,18 +48,22 @@ GuiMainWindow::GuiMainWindow(ParametersGuiMainWindow* parameters, std::string gu
     connect(tab_widget_, SIGNAL(currentChanged(int)), this, SLOT(changeCurrent(int)));
 
     // Actions
-    QIcon icon = style_->standardIcon(QStyle::SP_FileDialogEnd);
+    about_action_ = new QAction("About", this);
     exit_action_ = new QAction("Exit", this);
 
+    about_action_->setCheckable(false);
     exit_action_->setCheckable(false);
+
+    connect(about_action_, SIGNAL(triggered()), this, SLOT(about()));
     connect(exit_action_, SIGNAL(triggered()), this, SLOT(exit()));
+
+    about_menu_->addAction(about_action_);
+    file_menu_->addAction(exit_action_);
 
     view_actions_.clear();
 
-    file_menu_->addAction(exit_action_);
-
     // Main window
-    setWindowTitle(gui_name.c_str());
+    setWindowTitle(gui_name_.c_str());
     setCentralWidget(tab_widget_);
 
     // Timer
@@ -58,23 +72,10 @@ GuiMainWindow::GuiMainWindow(ParametersGuiMainWindow* parameters, std::string gu
     update_timer_->start(parameters->p_update_time_interval);
 }
 
-GuiMainWindow::~GuiMainWindow()
-{
-    delete update_timer_;
-
-    for (std::vector<QAction*>::iterator it = view_actions_.begin(); it != view_actions_.end(); ++it)
-    {
-        delete *it;
-    }
-
-    delete exit_action_;
-    delete tab_widget_;
-    delete title_;
-    delete style_;
-}
-
 void GuiMainWindow::reset()
 {
+    for (std::vector<QAction*>::iterator it = view_actions_.begin(); it != view_actions_.end(); ++it)
+        delete *it;
 }
 
 void GuiMainWindow::setTitle(std::string title)
@@ -85,24 +86,6 @@ void GuiMainWindow::setTitle(std::string title)
 void GuiMainWindow::setLogo(std::string logo)
 {
     title_->setPixmap(logo);
-}
-
-
-void GuiMainWindow::addMenu(std::string menu)
-{
-    menubar_->addMenu(QString::fromStdString(menu));
-}
-
-void GuiMainWindow::addMenuAction()
-{
-}
-
-void GuiMainWindow::addToolBarButton()
-{
-}
-
-void GuiMainWindow::addStatusBarLabel()
-{
 }
 
 void GuiMainWindow::insertTabPage(int index, GuiCentralWidget* page, std::string label, QIcon* icon)
@@ -135,6 +118,11 @@ void GuiMainWindow::insertTabPage(int index, GuiCentralWidget* page, std::string
     {
         action->trigger();
     }
+}
+
+void GuiMainWindow::about()
+{
+    QMessageBox::about(this, "About", "ROS graphical tool to illustrate a behavior-based architecture.");
 }
 
 void GuiMainWindow::exit()

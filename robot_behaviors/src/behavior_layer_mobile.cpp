@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 
 	ros::NodeHandle nh, np("~");
 
-    robot_common::BehaviorCreatorImpl<geometry_msgs::Twist, BehaviorAvoidObstacles> creator("BehaviorAvoidObstacles");
+    robot_common::BehaviorCreatorImpl<geometry_msgs::Twist, BehaviorAvoidObstacles> test("BehaviorAvoidObstacles"); // TODO Find why adding this line makes everything work. Does not make sense to me...
 
 	BehaviorLayerMobile behavior_layer(nh, np);
 

@@ -52,9 +52,8 @@ namespace robot_gui
                          FAILURE };
 
             ///\brief Class constructor.
-            ///\param parameters Parameters of the GUI main window.
             ///\param gui_name Name of the GUI application.
-            GuiMainWindow(ParametersGuiMainWindow* parameters, std::string gui_name = "/gui/main_window");
+            GuiMainWindow(std::string gui_name = "/gui/main_window");
 
             ///\brief Class destructor.
             ~GuiMainWindow();
@@ -62,6 +61,10 @@ namespace robot_gui
             ///\brief Get the name of the GUI application.
             ///\return the name of the GUI application.
             std::string name() { return gui_name_; }
+
+            ///\brief Initialize the mainwindow
+            ///\param parameters Parameters of the GUI main window.
+            void init(ParametersGuiMainWindow* parameters);
 
             ///\brief Reset the mainwindow
             void reset();
@@ -74,19 +77,6 @@ namespace robot_gui
             ///\param logo Path to the logo file.
             void setLogo(std::string logo);
 
-            ///\brief Add a menu to the mainwindow.
-            ///\param menu Name of the menu.
-            void addMenu(std::string menu);
-
-            ///\brief Add a action to a menu.
-            void addMenuAction();
-
-            ///\brief Add a toolbar button to the toolbar.
-            void addToolBarButton();
-
-            ///\brief Add a statusbar label to the statusbar.
-            void addStatusBarLabel();
-
             ///\brief Add a tab page to the mainwindow's central widget.
             ///\param index Index of the page.
             ///\param page GuiCentralWidget of the page.
@@ -94,17 +84,6 @@ namespace robot_gui
             ///\param icon Icon of the tab.
             ///\return index of the inserted tab.
             void insertTabPage(int index, GuiCentralWidget* page, std::string label, QIcon* icon = NULL);
-
-            ///\brief Add a toolbar item.
-            ///\param index Index of the item.
-            ///\param item Widget of the item.
-            ///\param label Label of the item.
-            ///\param icon Icon of the item.
-            ///\return index of the inserted item.
-            void insertToolBoxItem(int index, QWidget* item,  std::string label, QIcon* icon = NULL);
-
-            ///\brief Add a statusbar to the mainwindow.
-//            void addDockWidget();
 
             ///\brief Get style
             ///\return style;
@@ -115,6 +94,9 @@ namespace robot_gui
             static const char* getErrorMessage(int return_value);
 
         private Q_SLOTS:
+
+            ///\brief Message box describing the application.
+            void about();
 
             ///\brief Exit application.
             void exit();
@@ -136,7 +118,6 @@ namespace robot_gui
             QStyle* style_;
 
             QTabWidget* tab_widget_;
-            QToolBox* toolbox_;
 
             GuiTitle* title_;
 
@@ -149,6 +130,7 @@ namespace robot_gui
 
             QToolBar* view_toolbar_;
 
+            QAction* about_action_;
             QAction* exit_action_;
             std::vector<QAction*> view_actions_;
 

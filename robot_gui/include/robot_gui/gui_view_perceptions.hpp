@@ -1,5 +1,5 @@
-#ifndef GUI_DISPLAY_CAMERA_HPP
-#define GUI_DISPLAY_CAMERA_HPP
+#ifndef GUI_VIEW_PERCEPTIONS_HPP
+#define GUI_VIEW_PERCEPTIONS_HPP
 
 #include <robot_gui/gui_central_widget.hpp>
 
@@ -10,7 +10,7 @@
 #include <QObject>
 
 /*! 
- *  \brief     GuiDisplayCamera
+ *  \brief     GuiViewPerceptions
  *  \details   This class is a GuiCentralWidget to display the 
  *             image of a camera.
  *  \author    David Brodeur <David.Brodeur@USherbrooke.ca>
@@ -21,17 +21,17 @@
 
 namespace robot_gui
 {
-    class GuiDisplayCamera : public GuiCentralWidget
+    class GuiViewPerceptions : public GuiCentralWidget
     {
         Q_OBJECT
 
         public:
 
             ///\brief Default constructor
-            GuiDisplayCamera();
+            GuiViewPerceptions();
 
             ///\brief Destructor
-            ~GuiDisplayCamera();
+            ~GuiViewPerceptions();
 
             ///\brief Get reference to the scene.
             ///\return a reference to the scene.
@@ -43,8 +43,13 @@ namespace robot_gui
 
             void setImage(QImage& image);
 
+            ///\brief Initialize the central widget.
+            void init();
+
+            ///\brief Reset the central widget.
+            void reset();
+
             ///\brief Update the displayed scene.
-            ///\param frame Camera frame;
             void update();
 
         private:
@@ -55,4 +60,4 @@ namespace robot_gui
     };
 }
 
-#endif // GUI_DISPLAY_CAMERA_HPP
+#endif // GUI_VIEW_PERCEPTIONS_HPP

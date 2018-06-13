@@ -1,5 +1,7 @@
 #include <robot_gui/gui_central_widget.hpp>
 
+#include <iostream>
+
 using namespace robot_gui;
 
 GuiCentralWidget::GuiCentralWidget()
@@ -10,9 +12,5 @@ GuiCentralWidget::GuiCentralWidget()
 
 GuiCentralWidget::~GuiCentralWidget()
 {
-    delete layout_;
-}
-
-void GuiCentralWidget::update()
-{
+    delete layout_;    
 }

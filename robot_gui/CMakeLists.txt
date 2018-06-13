@@ -136,10 +136,10 @@ include_directories(
   robot_gui/gui_diagram_arrow.hpp
   robot_gui/gui_diagram_item.hpp
   robot_gui/gui_diagram_text.hpp
-  robot_gui/gui_display_camera.hpp
   robot_gui/gui_mainwindow.hpp
   robot_gui/gui_title.hpp
   robot_gui/gui_view_behaviors.hpp
+  robot_gui/gui_view_perceptions.hpp
 
   robot_gui/gui_speech.hpp
 
@@ -160,10 +160,10 @@ add_library(robot_gui
   src/gui_diagram_arrow.cpp
   src/gui_diagram_item.cpp
   src/gui_diagram_text.cpp
-  src/gui_display_camera.cpp
   src/gui_mainwindow.cpp
   src/gui_title.cpp
   src/gui_view_behaviors.cpp
+  src/gui_view_perceptions.cpp
 
   ${QT_SOURCES}
   ${QT_RESOURCES_CPP}

@@ -6,8 +6,12 @@
 // Qt includes
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QGroupBox>
+#include <QHBoxLayout>
 #include <QImage>
 #include <QObject>
+#include <QVBoxLayout>
+#include <QWidget>
 
 #include <string>
 #include <vector>
@@ -52,11 +56,28 @@ namespace robot_gui
 
             void setActivations(std::vector<uint8_t>& activation);
 
+            ///\brief Initialize the central widget.
+            void init();
+
+            ///\brief Reset the central widget.
+            void reset();
+
             ///\brief Update the displayed scene.
-            ///\param frame Camera frame;
             void update();
 
+        private Q_SLOTS:
+
+            ///\brief Set a behavior's activation.
+            ///\param checked True if the action was checked.
+            void activate(bool checked);
+
         private:
+
+            QWidget* widget_;
+            QHBoxLayout* hlayout_;
+
+            QGroupBox* group_box_settings_;
+            QVBoxLayout* layout_settings_;
 
             QGraphicsScene* scene_; /// < Scene that contains all graphical elements to be displayed in the ComicsView.
             QGraphicsView* view_;   /// < View displayed by the widget.

@@ -34,8 +34,14 @@ namespace robot_gui {
             ///\return a reference to the layout.
             QVBoxLayout* layout() { return layout_; }
 
+            ///\brief Initialize the central widget.
+            virtual void init() = 0;
+
+            ///\brief Reset the central widget.
+            virtual void reset() = 0;
+
             ///\brief Update the widget.
-            virtual void update();
+            virtual void update() = 0;
 
         private:
 

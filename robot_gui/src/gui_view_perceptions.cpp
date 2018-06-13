@@ -1,10 +1,10 @@
-#include <robot_gui/gui_display_camera.hpp>
+#include <robot_gui/gui_view_perceptions.hpp>
 
 #include <QPixmap>
 
 using namespace robot_gui;
 
-GuiDisplayCamera::GuiDisplayCamera() : GuiCentralWidget()
+GuiViewPerceptions::GuiViewPerceptions() : GuiCentralWidget()
 {
     view_ = new QGraphicsView();
     scene_ = new QGraphicsScene(this);
@@ -13,18 +13,26 @@ GuiDisplayCamera::GuiDisplayCamera() : GuiCentralWidget()
     layout()->addWidget(view_);
 }
 
-GuiDisplayCamera::~GuiDisplayCamera()
+GuiViewPerceptions::~GuiViewPerceptions()
 {
     delete scene_;
     delete view_;
 }
 
-void GuiDisplayCamera::setImage(QImage& image)
+void GuiViewPerceptions::setImage(QImage& image)
 {
     image_ = image;
 }
 
-void GuiDisplayCamera::update()
+void GuiViewPerceptions::init()
+{
+}
+
+void GuiViewPerceptions::reset()
+{
+}
+
+void GuiViewPerceptions::update()
 {
     QPixmap pixmap = QPixmap::fromImage(image_);
 
