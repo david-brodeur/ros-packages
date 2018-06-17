@@ -1,8 +1,8 @@
-#include <robot_behaviors/behavior_move_forward.hpp>
+#include <robot_behaviors/mobile/behavior_move_forward.hpp>
 
 using namespace robot_behaviors;
 
-REGISTERIMPL(geometry_msgs::Twist, BehaviorMoveForward);
+REGISTERIMPL_BEHAVIOR_MOBILE(BehaviorMoveForward);
 
 BehaviorMoveForward::BehaviorMoveForward(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name) : BaseType(nh, behavior_name)
 {

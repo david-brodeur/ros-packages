@@ -1,12 +1,13 @@
 #ifndef BEHAVIOR_AVOID_OBSTACLES_HPP
 #define BEHAVIOR_AVOID_OBSTACLES_HPP
 
-#include <robot_common/definitions.hpp>
-#include <robot_common/behavior.hpp>
-#include <robot_perceptions/perception_range_distance.hpp>
-
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
+
+#include <robot_common/definitions.hpp>
+#include <robot_common/behavior.hpp>
+#include <robot_behaviors/mobile/behavior_factory_mobile.hpp>
+#include <robot_perceptions/perception_range_distance.hpp>
 
 #include <string>
 
@@ -61,7 +62,7 @@ namespace robot_behaviors
 
             robot_perceptions::PerceptionRangeDistance* range_; ///< Range distance Perception.
 
-            REGISTER(geometry_msgs::Twist, BehaviorAvoidObstacles);
+            REGISTER_BEHAVIOR_MOBILE(BehaviorAvoidObstacles);
     };
 }
 

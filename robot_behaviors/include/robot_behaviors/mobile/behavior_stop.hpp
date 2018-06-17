@@ -1,16 +1,17 @@
-#ifndef BEHAVIOR_MOVE_FORWARD_HPP
-#define BEHAVIOR_MOVE_FORWARD_HPP
-
-#include <robot_common/definitions.hpp>
-#include <robot_common/behavior.hpp>
+#ifndef BEHAVIOR_STOP_HPP
+#define BEHAVIOR_STOP_HPP
 
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 
+#include <robot_common/definitions.hpp>
+#include <robot_common/behavior.hpp>
+#include <robot_behaviors/mobile/behavior_factory_mobile.hpp>
+
 /*! 
- *  \brief     BehaviorMoveForward
- *  \details   This class updates the value of a command to move the robot 
- *             forward at constant velocity. 
+ *  \brief     BehaviorStop
+ *  \details   This class updates the value of a command with a zero linear 
+ *             and angular velocity in all directions. 
  *  \author    David Brodeur <David.Brodeur@USherbrooke.ca>
  *  \version   0.0.1
  *  \date      2017
@@ -19,7 +20,7 @@
 
 namespace robot_behaviors
 {
-    class BehaviorMoveForward: public robot_common::Behavior<geometry_msgs::Twist>
+    class BehaviorStop: public robot_common::Behavior<geometry_msgs::Twist>
     {
         typedef robot_common::Behavior<geometry_msgs::Twist> BaseType; ///< Base class type definition.
 
@@ -29,10 +30,10 @@ namespace robot_behaviors
             ///\param nh NodeHandle.
             ///\param np Private NodeHandle.
             ///\param behavior_name Name of the Behavior.
-            BehaviorMoveForward(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name = "/behavior/move_forward");
+            BehaviorStop(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name = "/behavior/stop");
 
             ///\brief Class destructor.
-            ~BehaviorMoveForward();
+            ~BehaviorStop();
 
             ///\brief Initialize the behavior.
             void init();
@@ -40,11 +41,11 @@ namespace robot_behaviors
             ///\brief Reset the behavior.
             void reset();
 
-            ///\brief Updates the value of a command to move the robot forward at constant velocity.
+            ///\brief Updates the value of a command with a zero linear and angular velocity in all directions.
             void update(geometry_msgs::Twist& command);
 
-            REGISTER(geometry_msgs::Twist, BehaviorMoveForward);
+            REGISTER_BEHAVIOR_MOBILE(BehaviorStop);
     };
 }
 
-#endif // BEHAVIOR_MOVE_FORWARD_HPP
+#endif // BEHAVIOR_STOP_HPP

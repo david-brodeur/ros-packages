@@ -1,8 +1,8 @@
-#include <robot_behaviors/behavior_stop.hpp>
+#include <robot_behaviors/mobile/behavior_stop.hpp>
 
 using namespace robot_behaviors;
 
-REGISTERIMPL(geometry_msgs::Twist, BehaviorStop);
+REGISTERIMPL_BEHAVIOR_MOBILE(BehaviorStop);
 
 BehaviorStop::BehaviorStop(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name) : BaseType(nh, behavior_name)
 {

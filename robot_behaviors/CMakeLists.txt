@@ -122,40 +122,41 @@ include_directories(
 
   include
 
-  robot_behaviors/behaviors.hpp
+  robot_behaviors/mobile/behavior_avoid_obstacles.hpp
+  robot_behaviors/mobile/behavior_move_forward.hpp
+  robot_behaviors/mobile/behavior_stop.hpp
 
-  robot_behaviors/behavior_avoid_obstacles.hpp
-  robot_behaviors/behavior_move_forward.hpp
-  robot_behaviors/behavior_stop.hpp
-
-  robot_behaviors/behavior_layer_mobile.hpp
+  robot_behaviors/mobile/behavior_factory_mobile.hpp
+  robot_behaviors/mobile/behavior_layer_mobile.hpp
 
   ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
-add_library(robot_behaviors
+add_library(robot_behaviors_mobile
 
-  src/behavior_avoid_obstacles.cpp
-  src/behavior_move_forward.cpp
-  src/behavior_stop.cpp
+  src/mobile/behavior_avoid_obstacles.cpp
+  src/mobile/behavior_move_forward.cpp
+  src/mobile/behavior_stop.cpp
+
+  src/mobile/behavior_factory_mobile.cpp
 )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-add_dependencies(robot_behaviors ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(robot_behaviors_mobile ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-add_executable(behavior_layer_mobile src/behavior_layer_mobile.cpp)
+add_executable(behavior_layer_mobile src/mobile/behavior_layer_mobile.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(robot_behaviors_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(robot_behaviors ${catkin_LIBRARIES})
-target_link_libraries(behavior_layer_mobile robot_behaviors ${catkin_LIBRARIES})
+target_link_libraries(robot_behaviors_mobile ${catkin_LIBRARIES})
+target_link_libraries(behavior_layer_mobile robot_behaviors_mobile ${catkin_LIBRARIES})
 
 #############
 ## Install ##

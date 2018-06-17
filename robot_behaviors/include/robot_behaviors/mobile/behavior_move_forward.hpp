@@ -1,16 +1,17 @@
-#ifndef BEHAVIOR_STOP_HPP
-#define BEHAVIOR_STOP_HPP
+#ifndef BEHAVIOR_MOVE_FORWARD_HPP
+#define BEHAVIOR_MOVE_FORWARD_HPP
 
 #include <ros/ros.h>
-
 #include <geometry_msgs/Twist.h>
 
+#include <robot_common/definitions.hpp>
 #include <robot_common/behavior.hpp>
+#include <robot_behaviors/mobile/behavior_factory_mobile.hpp>
 
 /*! 
- *  \brief     BehaviorStop
- *  \details   This class updates the value of a command with a zero linear 
- *             and angular velocity in all directions. 
+ *  \brief     BehaviorMoveForward
+ *  \details   This class updates the value of a command to move the robot 
+ *             forward at constant velocity. 
  *  \author    David Brodeur <David.Brodeur@USherbrooke.ca>
  *  \version   0.0.1
  *  \date      2017
@@ -19,7 +20,7 @@
 
 namespace robot_behaviors
 {
-    class BehaviorStop: public robot_common::Behavior<geometry_msgs::Twist>
+    class BehaviorMoveForward: public robot_common::Behavior<geometry_msgs::Twist>
     {
         typedef robot_common::Behavior<geometry_msgs::Twist> BaseType; ///< Base class type definition.
 
@@ -29,10 +30,10 @@ namespace robot_behaviors
             ///\param nh NodeHandle.
             ///\param np Private NodeHandle.
             ///\param behavior_name Name of the Behavior.
-            BehaviorStop(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name = "/behavior/stop");
+            BehaviorMoveForward(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name = "/behavior/move_forward");
 
             ///\brief Class destructor.
-            ~BehaviorStop();
+            ~BehaviorMoveForward();
 
             ///\brief Initialize the behavior.
             void init();
@@ -40,11 +41,11 @@ namespace robot_behaviors
             ///\brief Reset the behavior.
             void reset();
 
-            ///\brief Updates the value of a command with a zero linear and angular velocity in all directions.
+            ///\brief Updates the value of a command to move the robot forward at constant velocity.
             void update(geometry_msgs::Twist& command);
 
-            REGISTER(geometry_msgs::Twist, BehaviorStop);
+            REGISTER_BEHAVIOR_MOBILE(BehaviorMoveForward);
     };
 }
 
-#endif // BEHAVIOR_STOP_HPP
+#endif // BEHAVIOR_MOVE_FORWARD_HPP

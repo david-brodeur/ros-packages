@@ -49,7 +49,7 @@ namespace robot_common
 
         protected:
 
-            //BehaviorFactory<T>* factory_; ///< BehaviorFactory module.
+            BehaviorFactory<T>* factory_; ///< BehaviorFactory module.
 
         private:
 
@@ -87,6 +87,7 @@ namespace robot_common
         np.getParam("behavior_priorities", behavior_priorities_);
 
         arbitration_ = nullptr;
+        factory_ = nullptr;
     }
 
     template <class T>
@@ -109,15 +110,20 @@ namespace robot_common
         // Create all Behaviors for the layer
         for (unsigned int i = 0; i < behavior_names_.size(); i++)
         {
-            //Behavior<T>* behavior = factory_->create(behavior_names_[i], nh_, np_);
-            Behavior<T>* behavior = BehaviorFactory<T>::create(behavior_names_[i], nh_, np_);
+            if (factory_ != nullptr)
+            {
+                Behavior<T>* behavior = factory_->create(behavior_names_[i], nh_, np_);
 
-            //behavior->init();
+                behavior->init();
 
-            if (behavior)
-                arbitration_->add(behavior_priorities_[i], behavior);
+                if (behavior)
+                    arbitration_->add(behavior_priorities_[i], behavior);
+                else
+                    ROS_ERROR("Unable to create behavior %s", behavior_names_[i].c_str());
+            }
+
             else
-                ROS_ERROR("Unable to create behavior %s", behavior_names_[i].c_str());
+                ROS_ERROR("No factory instantiated");
         }
 
         return 0;

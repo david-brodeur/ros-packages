@@ -1,8 +1,8 @@
-#include <robot_behaviors/behavior_avoid_obstacles.hpp>
+#include <robot_behaviors/mobile/behavior_avoid_obstacles.hpp>
 
 using namespace robot_behaviors;
 
-REGISTERIMPL(geometry_msgs::Twist, BehaviorAvoidObstacles);
+REGISTERIMPL_BEHAVIOR_MOBILE(BehaviorAvoidObstacles);
 
 BehaviorAvoidObstacles::BehaviorAvoidObstacles(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_name) : BaseType(nh, behavior_name)
 {

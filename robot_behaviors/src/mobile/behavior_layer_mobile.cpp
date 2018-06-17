@@ -1,15 +1,17 @@
-#include <robot_behaviors/behavior_layer_mobile.hpp>
+#include <robot_behaviors/mobile/behavior_layer_mobile.hpp>
 
-#include <robot_behaviors/behavior_avoid_obstacles.hpp>
-#include <robot_common/behavior_creator_impl.hpp>
+#include <robot_behaviors/mobile/behavior_factory_mobile.hpp>
+
 using namespace robot_behaviors;
 
 BehaviorLayerMobile::BehaviorLayerMobile(ros::NodeHandle& nh, ros::NodeHandle& np, std::string behavior_layer_name) : BaseType(nh, np, behavior_layer_name)
 {
+    factory_ = new BehaviorFactoryMobile();
 }
 
 BehaviorLayerMobile::~BehaviorLayerMobile()
 {
+    delete factory_;
 }
 
 int main(int argc, char** argv)
@@ -19,8 +21,6 @@ int main(int argc, char** argv)
 	ros::init(argc, argv, "behavior_layer_mobile");
 
 	ros::NodeHandle nh, np("~");
-
-    robot_common::BehaviorCreatorImpl<geometry_msgs::Twist, BehaviorAvoidObstacles> test("BehaviorAvoidObstacles"); // TODO Find why adding this line makes everything work. Does not make sense to me...
 
 	BehaviorLayerMobile behavior_layer(nh, np);
 
