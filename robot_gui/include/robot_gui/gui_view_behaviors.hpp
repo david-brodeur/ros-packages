@@ -4,12 +4,14 @@
 #include <robot_gui/gui_central_widget.hpp>
 
 // Qt includes
+#include <QAction>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <QImage>
 #include <QObject>
+#include <QPushButton>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -50,6 +52,8 @@ namespace robot_gui
             ///\return a reference to the view.
             QGraphicsView* view() { return view_; }
 
+            std::vector<QPushButton*>& pushbuttons() { return pushbuttons_; }
+
             void setNames(std::vector<std::string>& name);
 
             void setPriorities(std::vector<int>& priority);
@@ -65,12 +69,6 @@ namespace robot_gui
             ///\brief Update the displayed scene.
             void update();
 
-        private Q_SLOTS:
-
-            ///\brief Set a behavior's activation.
-            ///\param checked True if the action was checked.
-            void activate(bool checked);
-
         private:
 
             QWidget* widget_;
@@ -81,6 +79,8 @@ namespace robot_gui
 
             QGraphicsScene* scene_; /// < Scene that contains all graphical elements to be displayed in the ComicsView.
             QGraphicsView* view_;   /// < View displayed by the widget.
+
+            std::vector<QPushButton*> pushbuttons_;
 
             std::vector<std::string> name_;
             std::vector<int> priority_;

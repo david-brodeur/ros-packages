@@ -136,7 +136,7 @@ void GuiMainWindow::setView(bool checked)
 
     QAction* action = qobject_cast<QAction*>(QObject::sender());
 
-    for (std::vector<QAction*>::iterator it = view_actions_.begin(); it != view_actions_.end(); ++it)
+    for (std::vector<QAction*>::iterator it = view_actions_.begin(); it != view_actions_.end(); it++)
     {
         if (*it != action)
         {

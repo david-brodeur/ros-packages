@@ -1,5 +1,9 @@
 #include <robot_gui/gui_speech.hpp>
 
+#include <std_srvs/SetBool.h>
+
+#include <QPushButton>
+
 using namespace robot_gui;
 
 GuiSpeech::GuiSpeech(ros::NodeHandle& nh, ros::NodeHandle& np)
@@ -14,6 +18,23 @@ GuiSpeech::GuiSpeech(ros::NodeHandle& nh, ros::NodeHandle& np)
     image_sub_ = it_->subscribe(image_topic_name_, 1, &GuiSpeech::image_cb, this);
 
     behavior_map_info_client_ = nh.serviceClient<robot_common::BehaviorMapInfo>(arbitration_name_ + "/list");
+
+    robot_common::BehaviorMapInfo srv;
+    std::vector<std::string>::iterator it;
+
+    if (behavior_map_info_client_.call(srv))
+    {
+        for (unsigned int iBehavior = 0; iBehavior < srv.response.name.size(); iBehavior++)
+        {
+            behavior_activation_clients_.push_back(nh.serviceClient<std_srvs::SetBool>(srv.response.name[iBehavior] + "/activate"));
+        }
+    }
+
+    else
+    {
+        ROS_WARN("Failed to call service %s/list", arbitration_name_.c_str());
+    }
+
 }
 
 GuiSpeech::~GuiSpeech()
@@ -48,10 +69,16 @@ void GuiSpeech::init()
     main_window_->setLogo(gui_logo_);
 
     view_perceptions_ = new GuiViewPerceptions();
-
     view_behaviors_ = new GuiViewBehaviors();
     updateBehaviorMapInfo();
     view_behaviors_->init();
+
+    std::vector<QPushButton*>::iterator it;
+
+    for (it = view_behaviors_->pushbuttons().begin(); it != view_behaviors_->pushbuttons().end(); it++)
+    {
+        connect(*it, SIGNAL(clicked(bool)), this, SLOT(setBehaviorActivation(bool)));
+    }
 
     QIcon icon = main_window_->style()->standardIcon(QStyle::SP_ComputerIcon);
     main_window_->insertTabPage(0, view_perceptions_, "Perceptions", &icon);
@@ -66,6 +93,27 @@ void GuiSpeech::init()
 
 void GuiSpeech::reset()
 {
+}
+
+void GuiSpeech::setBehaviorActivation(bool activate)
+{
+    int index;
+    std_srvs::SetBool srv;
+    srv.request.data = !activate;
+
+    QPushButton* pushbutton = qobject_cast<QPushButton*>(QObject::sender());
+
+    std::vector<QPushButton*>::iterator it;
+
+    for (it = view_behaviors_->pushbuttons().begin(); it != view_behaviors_->pushbuttons().end(); it++)
+    {
+        if (*it == pushbutton)
+        {
+            index = std::distance(view_behaviors_->pushbuttons().begin(), it);
+            behavior_activation_clients_[index].call(srv);
+            break;
+        }
+    }   
 }
 
 void GuiSpeech::updateBehaviorMapInfo()

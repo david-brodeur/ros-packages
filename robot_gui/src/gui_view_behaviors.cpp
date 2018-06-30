@@ -7,7 +7,6 @@
 #include <QColor>
 #include <QPixmap>
 #include <QPointF>
-#include <QPushButton>
 
 using namespace robot_gui;
 
@@ -52,7 +51,10 @@ void GuiViewBehaviors::init()
     for (unsigned int iBehavior = 0; iBehavior < name_.size(); iBehavior++)
     {
         QPushButton* pushbutton = new QPushButton(QString::fromStdString(name_[iBehavior]));
-        //QAction* action;
+        pushbutton->setCheckable(true);
+        pushbutton->setChecked(false);
+        pushbuttons_.push_back(pushbutton);
+        connect(pushbutton, SIGNAL(clicked(bool)), pushbutton, SLOT(setChecked(bool)));
         layout_settings_->addWidget(pushbutton);
     }
 
@@ -70,12 +72,15 @@ void GuiViewBehaviors::init()
 
 void GuiViewBehaviors::reset()
 {
+    pushbuttons_.clear();
 }
 
 // TODO replace hard-coded values
 void GuiViewBehaviors::update()
 {
-    QColor color = Qt::white;
+    QColor brush_color = Qt::white;
+    QColor pen_color = Qt::black;
+    unsigned int pen_width = 8;
 
     float x = 0;
     float y = 0;
@@ -91,8 +96,8 @@ void GuiViewBehaviors::update()
     else
         item2->setPos(QPointF(250.0, ((name_.size() - 1) * 75.0)));
 
-    item2->setBrush(color);
-    item2->setPen(QPen(Qt::black, 8));
+    item2->setBrush(brush_color);
+    item2->setPen(QPen(pen_color, pen_width));
     scene_->addItem(item2);
 
     for (unsigned int iBehavior = 0; iBehavior < name_.size(); iBehavior++)
@@ -100,16 +105,25 @@ void GuiViewBehaviors::update()
         GuiDiagramItem* item = new GuiDiagramItem(GuiDiagramItem::Behavior);
 
         if (!activation_[iBehavior])
-            item->setPen(QPen(Qt::red, 10));
-        else
-            item->setPen(QPen(Qt::black, 8));
+        {
+            pen_color = Qt::red;
+            pen_width = 10;
+        }
 
-        item->setBrush(color);
+        else
+        {
+            pen_color = Qt::black;
+            pen_width = 8;
+        }
+
+        item->setPen(QPen(pen_color, pen_width));
+        item->setBrush(brush_color);
         item->setPos(QPointF(x, y));
         scene_->addItem(item);
 
         GuiDiagramArrow* arrow = new GuiDiagramArrow(item, item2);
-        arrow->setColor(Qt::black);
+
+        arrow->setColor(pen_color);
         item->addArrow(arrow);
         item2->addArrow(arrow);
         arrow->setZValue(-1000.0);
@@ -117,12 +131,7 @@ void GuiViewBehaviors::update()
         arrow->updatePosition();
 
         GuiDiagramText* text = new GuiDiagramText();
-
-        if (!activation_[iBehavior])
-            text->setDefaultTextColor(Qt::red);
-        else
-            text->setDefaultTextColor(Qt::black);
-
+        text->setDefaultTextColor(pen_color);
         text->setFont(QFont("Courier", 12, QFont::Bold));
         text->setTextInteractionFlags(Qt::NoTextInteraction);
         text->setZValue(1000.0);
@@ -133,12 +142,9 @@ void GuiViewBehaviors::update()
         scene_->addItem(text);
 
         y += 150.0;
+
+        pushbuttons_[iBehavior]->setChecked(!activation_[iBehavior]);
     }
 
     view_->fitInView(scene_->sceneRect(), Qt::KeepAspectRatio);
 }
-
-void GuiViewBehaviors::activate(bool checked)
-{
-}
-

@@ -58,6 +58,10 @@ namespace robot_gui
 
         private Q_SLOTS:
 
+            ///\brief Set Behavior activation.
+            ///\param activate If true, the Behavior is enabled. If false, it is disabled.
+            void setBehaviorActivation(bool activate);
+
             ///\brief Update Behavior Map Info.
             void updateBehaviorMapInfo();
 
@@ -75,8 +79,8 @@ namespace robot_gui
             image_transport::ImageTransport* it_;   ///< ROS image transport.
             image_transport::Subscriber image_sub_; ///< ROS image subscriber.
 
-            std::vector<ros::ServiceClient*> behavior_activation_client_;    ///< ROS clients to set behaviors activation.
             ros::ServiceClient behavior_map_info_client_;                    ///< ROS client to get information from the behaviors map.
+            std::vector<ros::ServiceClient> behavior_activation_clients_;    ///< ROS clients to set behaviors activation.
 
             QTimer* behavior_update_timer_; /// < Timer to update the Behavior architecture info.
 
